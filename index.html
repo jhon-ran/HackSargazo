@@ -197,6 +197,10 @@ fieldset{border:0;padding:0;margin:0;display:grid;gap:8px;min-width:0}
 .orgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px}
 .org{padding:28px;border:1px solid var(--line);border-radius:14px;display:grid;gap:12px;align-content:start;background:var(--surface)}
 .org h3{font-size:1.5rem;font-weight:800;font-stretch:115%}
+.org-logo{display:grid;place-items:center;width:96px;height:96px;border-radius:14px;margin-bottom:6px}
+.org-logo img{display:block;max-width:76%;max-height:76%;width:auto;height:auto}
+.org-logo.on-dark{background:#0D2A2F}
+.org-logo.on-light{background:#FFFFFF;border:1px solid var(--line)}
 .org p{color:var(--muted)}
 
 /* Ruta */
@@ -738,11 +742,13 @@ footer .wrap{display:grid;gap:28px}
     </div>
     <div class="orgs">
       <article class="org">
+        <div class="org-logo on-light"><img src="img/logo-wtm-qroo.webp" width="134" height="134" loading="lazy" alt="Logo de Women Techmakers Quintana Roo"></div>
         <h3>Women Techmakers Quintana Roo</h3>
         <p>Capítulo local de Women Techmakers, programa global que da visibilidad, comunidad y recursos a mujeres en tecnología. Organiza eventos, talleres y networking para impulsar la participación femenina en el ecosistema tech del sureste de México.</p>
         <a class="ig" href="https://www.instagram.com/wtm.qroo/" target="_blank" rel="noopener">Instagram · @wtm.qroo</a>
       </article>
       <article class="org">
+        <div class="org-logo on-dark"><img src="img/logo-rivieramayatech.webp" width="166" height="240" loading="lazy" alt="Logo de Riviera Maya Tech Builders"></div>
         <h3>Riviera Maya Tech Builders</h3>
         <p>Comunidad que conecta a desarrolladores, emprendedores, diseñadores y entusiastas de la innovación en la Riviera Maya, a través de meetups, hackatones y proyectos colaborativos.</p>
         <a class="ig" href="https://www.instagram.com/rivieramayatech" target="_blank" rel="noopener">Instagram · @rivieramayatech</a>
