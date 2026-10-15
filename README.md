@@ -18,6 +18,7 @@ La página sirve para medir el interés de participantes, captar aliados y patro
 ├── codigo-de-conducta.html    Código de conducta del evento
 ├── apps-script/Code.gs        Script que guarda los registros en una hoja de Google
 ├── img/                       Fotos optimizadas (.webp) y originales de Unsplash (.jpg)
+├── icons/                     Favicon e íconos para pestañas, iOS y Android (fuente: favicon.svg)
 └── README.md
 ```
 
