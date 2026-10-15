@@ -594,7 +594,7 @@ footer .wrap{display:grid;gap:28px}
       <div class="side-list">
         <div><b>Participantes</b><span>Registro sin costo. Te avisamos cuando abra la convocatoria y la Innovation Week.</span></div>
         <div><b>Aliados</b><span>Te contactamos para conversar sobre la forma de apoyo que mejor le funcione a tu organización.</span></div>
-        <div><b>Ponentes y voluntariado</b><span>¿Quieres dar una charla o ayudar en la organización? <a class="on-dark" data-cfg-href="googleForm" href="https://docs.google.com/forms/d/e/1FAIpQLSfMEZcPkq8VluRO24-nsNRbM3sDmgrDYryF5pZ1R4jVhM_d_w/viewform" target="_blank" rel="noopener">Llena la convocatoria de colaboradores</a>.</span></div>
+        <div><b>Ponentes, mentores y voluntariado</b><span>¿Quieres dar una charla, ser mentor o ayudar en la organización? Usa la pestaña <a class="on-dark" href="#aliados-form" data-tab="aliado">Quiero ser aliado</a> y elige "Persona independiente" si participas por tu cuenta.</span></div>
         <div><b>Contacto</b>
           <span class="contact-line"><a class="on-dark mono-inline" data-cfg-href="email" href="mailto:hola@rivieramaya.tech"><span data-cfg="email">hola@rivieramaya.tech</span></a> <button type="button" class="copy" data-copy>Copiar</button></span>
           <span class="socials"><a class="on-dark" href="https://www.instagram.com/wtm.qroo/" target="_blank" rel="noopener">Instagram @wtm.qroo</a><a class="on-dark" href="https://www.instagram.com/rivieramayatech" target="_blank" rel="noopener">Instagram @rivieramayatech</a></span>
@@ -649,10 +649,10 @@ footer .wrap{display:grid;gap:28px}
 
       <form id="form-aliado" role="tabpanel" aria-labelledby="tab-aliado" novalidate hidden>
         <div class="row">
-          <div class="field"><label for="a-org">Organización</label><input id="a-org" name="organizacion" type="text" autocomplete="organization" required></div>
+          <div class="field"><label for="a-org">Organización <span class="opt">(o tu nombre)</span></label><input id="a-org" name="organizacion" type="text" autocomplete="organization" required></div>
           <div class="field"><label for="a-tipo">Tipo de organización</label>
             <select id="a-tipo" name="tipo" required>
-              <option value="">Elige una opción</option><option>Empresa</option><option>Universidad</option><option>Centro de investigación</option><option>Organización civil</option><option>Gobierno</option><option>Comunidad tech</option><option>Otro</option>
+              <option value="">Elige una opción</option><option>Empresa</option><option>Universidad</option><option>Centro de investigación</option><option>Organización civil</option><option>Gobierno</option><option>Comunidad tech</option><option>Persona independiente</option><option>Otro</option>
             </select></div>
         </div>
         <div class="row">
@@ -675,6 +675,7 @@ footer .wrap{display:grid;gap:28px}
             <label class="check"><input type="checkbox" name="apoyo" value="Créditos cloud/IA o hardware"> Créditos cloud/IA o hardware</label>
             <label class="check"><input type="checkbox" name="apoyo" value="Premios"> Premios</label>
             <label class="check"><input type="checkbox" name="apoyo" value="Difusión"> Difusión</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Voluntariado"> Voluntariado</label>
           </div>
         </fieldset>
         <div class="reto-extra" id="a-reto-extra" hidden>
@@ -718,7 +719,7 @@ footer .wrap{display:grid;gap:28px}
         <details><summary>¿Hay premios?</summary><p>Sí. Los premios dependerán de nuestros aliados y pueden incluir apoyos económicos, becas, créditos tecnológicos y premios en especie. Los publicaremos con la convocatoria.</p></details>
         <details><summary>¿De quién es el proyecto que desarrolle?</summary><p>De tu equipo. Los aliados pueden tener primera oportunidad para apoyar o impulsar proyectos ganadores, pero eso siempre se acuerda con el equipo.</p></details>
         <details><summary>¿Hay una edad mínima?</summary><p>Las bases de participación, incluida la edad mínima, se publicarán con la convocatoria oficial.</p></details>
-        <details><summary>¿Cómo puedo dar una charla o ser voluntario?</summary><p>Llena la <a data-cfg-href="googleForm" href="https://docs.google.com/forms/d/e/1FAIpQLSfMEZcPkq8VluRO24-nsNRbM3sDmgrDYryF5pZ1R4jVhM_d_w/viewform" target="_blank" rel="noopener">convocatoria de colaboradores</a> o escríbenos a <span class="mono-inline" data-cfg="email">hola@rivieramaya.tech</span>.</p></details>
+        <details><summary>¿Cómo puedo dar una charla o ser voluntario?</summary><p>Regístrate en el <a href="#aliados-form" data-tab="aliado">formulario de aliados</a> y marca "Charla o taller", "Mentoría" o "Voluntariado". Si participas por tu cuenta, elige "Persona independiente" como tipo de organización. También puedes escribirnos a <span class="mono-inline" data-cfg="email">hola@rivieramaya.tech</span>.</p></details>
       </div>
     </div>
   </div>
@@ -787,9 +788,7 @@ const CONFIG = {
   r4: "Antes del hackatón",
   r5: "Febrero 2027 · 12 horas",
   r6: "Después del evento",
-  faqWhen: "En febrero de 2027, en Cancún, Playa del Carmen o ambas ciudades. Anunciaremos la fecha y la sede en cuanto estén confirmadas; si registras tu interés, te avisamos primero.",
-  // Convocatoria de colaboradores (ponentes, aliados, voluntariado) en Google Forms
-  googleForm: "https://docs.google.com/forms/d/e/1FAIpQLSfMEZcPkq8VluRO24-nsNRbM3sDmgrDYryF5pZ1R4jVhM_d_w/viewform"
+  faqWhen: "En febrero de 2027, en Cancún, Playa del Carmen o ambas ciudades. Anunciaremos la fecha y la sede en cuanto estén confirmadas; si registras tu interés, te avisamos primero."
 };
 /* ====================================== */
 

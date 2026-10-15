@@ -50,7 +50,6 @@ Casi todo lo que va a cambiar está en un solo lugar: el bloque `CONFIG`, al fin
 | `faqWhen` | Respuesta a "¿Cuándo y dónde será?" | |
 | `r1` … `r6` | Fechas de los 6 pasos de la ruta de participación | `Desde hoy`, `Al confirmar sede y fecha`… |
 | `email` | Correo de contacto en toda la página | `hola@rivieramaya.tech` |
-| `googleForm` | Enlace a la convocatoria de colaboradores | Google Form |
 | `FORM_ENDPOINT` | URL del Apps Script que guarda los registros | vacío (modo vista previa) |
 
 **Ejemplo:** cuando se confirmen fecha y sede:
@@ -95,7 +94,7 @@ Los colores están definidos como variables al inicio del `<style>` (`--sea`, `-
 
 ## Formulario de registro
 
-La página tiene dos formularios: **participantes** y **aliados**. El de aliados incluye la opción "Proponer un reto", que muestra preguntas adicionales. Los registros se envían a una **hoja de Google** mediante Apps Script.
+La página tiene dos formularios: **participantes** y **aliados**. El de aliados también sirve para ponentes, mentores y voluntariado, que pueden registrarse como "Persona independiente". Incluye la opción "Proponer un reto", que muestra preguntas adicionales. Los registros se envían a una **hoja de Google** mediante Apps Script.
 
 Mientras `FORM_ENDPOINT` esté vacío, el formulario funciona pero **no guarda nada** y muestra un aviso de vista previa.
 
@@ -145,7 +144,6 @@ Desde github.com: abre el archivo → ícono del lápiz → edita → **Commit c
 - [ ] Respuestas de las preguntas frecuentes: edad mínima, comida, premios, propiedad intelectual, acompañamiento a personas sin equipo, Innovation Week obligatoria o no
 - [ ] Contacto dedicado para reportes del código de conducta
 - [ ] Revisar el código de conducta con los lineamientos de comunidad de Google (Women Techmakers)
-- [ ] Actualizar el Google Form de colaboradores (aún tiene fechas y textos de la edición anterior)
 - [ ] Logos de aliados confirmados
 - [ ] Página de recursos para personas inscritas (incluye acceso a la API de [SargaDB](https://sargadb.org))
 - [ ] Definir una licencia para el repositorio
