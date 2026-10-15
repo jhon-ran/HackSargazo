@@ -1,3 +1,5 @@
+/** @OnlyCurrentDoc */
+
 /**
  * HackSargazo — receptor de registros de la landing.
  *
@@ -11,7 +13,14 @@
  *
  * Cada envío se guarda en una pestaña: "participante" o "aliado".
  * Las columnas se crean solas según los campos del formulario.
+ * Cada registro de aliado manda un aviso por correo a NOTIFY_EMAIL.
+ *
+ * Si cambias este script: Implementar → Administrar implementaciones → Editar (lápiz)
+ * → Versión: "Nueva versión" → Implementar. Así la URL /exec no cambia.
  */
+
+// Correo(s) que reciben el aviso de cada aliado nuevo. Separa varios con comas.
+const NOTIFY_EMAIL = 'jhonnatan.rangel@gmail.com,yslen.glez@gmail.com,hola@rivieramaya.tech';
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -38,9 +47,38 @@ function doPost(e) {
       return /^[=+\-@]/.test(v) ? "'" + v : v; // evita inyección de fórmulas
     });
     sheet.appendRow(row);
+
+    if (tipo === 'aliado' && NOTIFY_EMAIL) notifyAliado_(data, ss.getUrl());
     return ok_();
   } finally {
     lock.releaseLock();
+  }
+}
+
+function notifyAliado_(d, sheetUrl) {
+  const lines = [
+    'Organización: ' + (d.organizacion || ''),
+    'Tipo: ' + (d.tipo || ''),
+    'Contacto: ' + (d.nombre || '') + (d.cargo ? ' (' + d.cargo + ')' : ''),
+    'Correo: ' + (d.correo || ''),
+    'Teléfono: ' + (d.telefono || '—'),
+    'Cómo quiere participar: ' + (d.apoyo || '—'),
+  ];
+  if (d.reto_problema) {
+    lines.push('', 'Reto propuesto: ' + d.reto_problema,
+      'Eje: ' + (d.reto_eje || '—'), 'Datos: ' + (d.reto_datos || '—'));
+  }
+  if (d.mensaje) lines.push('', 'Mensaje: ' + d.mensaje);
+  lines.push('', 'Ver todos los registros: ' + sheetUrl);
+  try {
+    MailApp.sendEmail({
+      to: NOTIFY_EMAIL,
+      replyTo: d.correo || undefined,
+      subject: 'HackSargazo · Nuevo aliado: ' + (d.organizacion || 'sin nombre'),
+      body: lines.join('\n'),
+    });
+  } catch (err) {
+    console.error('No se pudo enviar el aviso: ' + err);
   }
 }
 

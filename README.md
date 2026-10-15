@@ -101,7 +101,7 @@ Mientras `FORM_ENDPOINT` esté vacío, el formulario funciona pero **no guarda n
 
 ### Conectar la hoja de registros (una sola vez)
 
-1. Crea una hoja de Google, por ejemplo "HackSargazo – Registros", con una cuenta de la organización.
+1. Crea una hoja de Google, por ejemplo "HackSargazo – Registros", y compártela como editor con el resto del equipo organizador.
 2. Abre **Extensiones → Apps Script**, borra el contenido y pega `apps-script/Code.gs`. Guarda.
 3. **Implementar → Nueva implementación → Aplicación web**.
    - Ejecutar como: **Yo**
@@ -109,7 +109,7 @@ Mientras `FORM_ENDPOINT` esté vacío, el formulario funciona pero **no guarda n
 4. Autoriza los permisos y copia la URL que termina en `/exec`.
 5. Pégala en `FORM_ENDPOINT` dentro de `index.html` y sube el cambio.
 
-Cada envío se guarda en una pestaña, `participante` o `aliado`, y las columnas se crean solas. Si después agregas un campo al formulario, aparece como columna nueva sin tocar el script.
+Cada envío se guarda en una pestaña, `participante` o `aliado`, y las columnas se crean solas. Cada registro de aliado manda además un aviso por correo a la dirección de `NOTIFY_EMAIL`, al inicio del script. Si después agregas un campo al formulario, aparece como columna nueva sin tocar el script.
 
 > **Privacidad:** la hoja contiene datos personales. Compártela solo con el equipo organizador y **nunca subas exportaciones de registros a este repositorio**, que es público.
 
@@ -141,7 +141,7 @@ Desde github.com: abre el archivo → ícono del lápiz → edita → **Commit c
 ## Pendientes por confirmar
 
 - [ ] Fecha y sede definitivas (`CONFIG`)
-- [ ] Conectar `FORM_ENDPOINT` a la hoja de registros
+- [x] Conectar `FORM_ENDPOINT` a la hoja de registros
 - [ ] Respuestas de las preguntas frecuentes: edad mínima, comida, premios, propiedad intelectual, acompañamiento a personas sin equipo, Innovation Week obligatoria o no
 - [ ] Contacto dedicado para reportes del código de conducta
 - [ ] Revisar el código de conducta con los lineamientos de comunidad de Google (Women Techmakers)
