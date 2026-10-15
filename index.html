@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>HackSargazo</title>
+<meta name="description" content="HackSargazo: hackatón sobre el sargazo en la Riviera Maya. Febrero 2027 (por confirmar), Cancún y/o Playa del Carmen. Organizan Women Techmakers Quintana Roo y Riviera Maya Tech Builders.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..150,500..900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: banda de mar con sargazo a la deriva (hero) → franjas de contenido con columna de lectura de ~68ch; los datos van en mono como lecturas de campo. */
+:root{
+  --bg:#F2F7F6; --surface:#FFFFFF; --ink:#0D2A2F; --muted:#4A6468; --line:#D2E1DF;
+  --sea:#0A6A70; --sea-soft:#DCEFEE; --sarg:#B87A1C; --sarg-ink:#8A5911; --sarg-soft:#F6EAD4;
+  --ok:#1D7A4A; --err:#B3261E;
+  --f-display:"Anybody","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#06191D; --surface:#0C262B; --ink:#E4EFED; --muted:#9BB4B2; --line:#1C3D43;
+  --sea:#52C2BE; --sea-soft:#0F3539; --sarg:#E2A443; --sarg-ink:#EDBA63; --sarg-soft:#2A2312;
+  --ok:#5CCB8E; --err:#F2948C; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#06191D; --surface:#0C262B; --ink:#E4EFED; --muted:#9BB4B2; --line:#1C3D43;
+  --sea:#52C2BE; --sea-soft:#0F3539; --sarg:#E2A443; --sarg-ink:#EDBA63; --sarg-soft:#2A2312;
+  --ok:#5CCB8E; --err:#F2948C; color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+[id]{scroll-margin-top:76px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--sea)}
+:focus-visible{outline:3px solid var(--sarg);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+h1,h2,h3{font-family:var(--f-display);line-height:1.05;text-wrap:balance;margin:0}
+h2{font-size:clamp(2rem,4.6vw,3.3rem);font-weight:800;font-stretch:118%;letter-spacing:-.01em}
+h3{font-size:1.35rem;font-weight:700;font-stretch:110%}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sarg-ink)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch}
+section{padding-block:clamp(64px,9vw,112px)}
+.sec-head{display:grid;gap:14px;margin-bottom:clamp(32px,5vw,56px);max-width:760px}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.mark{font-family:var(--f-display);font-weight:900;font-stretch:125%;font-size:1.25rem;text-decoration:none;color:var(--ink);letter-spacing:-.01em}
+.mark span{color:var(--sarg)}
+.nav{display:flex;gap:22px;align-items:center}
+.nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:.95rem}
+.nav a:hover{color:var(--ink)}
+.nav a.btn-primary,.nav a.btn-primary:hover{color:#1B1203}
+@media (max-width:760px){.nav .hide-sm{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 1rem/1 var(--f-body);padding:14px 22px;border-radius:999px;border:2px solid transparent;text-decoration:none;cursor:pointer;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--sarg);color:#1B1203}
+.btn-ghost{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn-sm{padding:9px 16px;font-size:.9rem}
+@media (prefers-reduced-motion: reduce){.btn{transition:none}.btn:hover{transform:none}}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding-block:clamp(56px,9vw,104px) 0;background:linear-gradient(180deg,var(--bg) 0%,var(--sea-soft) 100%)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative;display:grid;gap:28px;container-type:inline-size}
+.hero h1{font-size:clamp(2.6rem,10cqi,8rem);font-weight:900;font-stretch:125%;max-width:100%;overflow-wrap:anywhere;letter-spacing:-.025em;line-height:.9}
+.hero h1 .s{color:var(--sarg);display:inline-block}
+.hero .tag{font-family:var(--f-display);font-weight:600;font-stretch:100%;font-size:clamp(1.3rem,2.6vw,1.9rem);max-width:28ch;line-height:1.2}
+.meta{display:flex;flex-wrap:wrap;gap:10px}
+.chip{font-family:var(--f-mono);font-size:.82rem;padding:7px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+.chip b{color:var(--sarg-ink);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.by{font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink);font-weight:600}
+.shore{position:relative;margin-top:clamp(40px,6vw,72px);height:56px}
+.shore svg{display:block;width:100%;height:100%}
+
+/* Problema */
+.readings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));border-top:2px solid var(--ink)}
+.reading{padding:22px 20px 24px 0;border-bottom:1px solid var(--line);display:grid;gap:8px;align-content:start;min-width:0}
+.reading .n{font-family:var(--f-mono);font-weight:600;font-size:clamp(1.9rem,3.4vw,2.5rem);font-variant-numeric:tabular-nums;color:var(--ink);line-height:1}
+.reading .n small{font-size:.5em;color:var(--sarg-ink);margin-left:4px}
+.reading p{font-size:.95rem;color:var(--muted)}
+.reading .src{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);opacity:.85}
+.problem-text{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px;margin-top:48px}
+.problem-text h3{margin-bottom:10px}
+.problem-text ul{margin:0;padding-left:1.1em;color:var(--muted)}
+.problem-text li{margin-bottom:6px}
+
+/* Fotos */
+.photo-band{margin:0}
+.photo-band img{display:block;width:100%;height:clamp(220px,40vw,560px);object-fit:cover;object-position:center 45%;background:var(--sarg-soft)}
+.photo-band figcaption{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);padding-top:8px}
+.ph{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:12px;margin-bottom:18px;background:var(--sea-soft)}
+.ph.bottle{object-position:center 72%}
+.quote-band{position:relative;isolation:isolate;overflow:hidden;color:#fff;padding-block:clamp(88px,14vw,180px)}
+.quote-band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.quote-band::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(6,25,29,.82) 0%,rgba(6,25,29,.55) 55%,rgba(6,25,29,.25) 100%)}
+.quote-band blockquote{margin:0;max-width:16ch;font-family:var(--f-display);font-weight:800;font-stretch:118%;font-size:clamp(2rem,5.4vw,4rem);line-height:1.02;text-wrap:balance}
+.quote-band p{margin-top:20px;max-width:46ch;font-size:1.1rem;color:rgba(255,255,255,.88)}
+.credits{font-size:.8rem}
+.credits a{color:inherit}
+
+/* Formato */
+.alt{background:var(--surface);border-block:1px solid var(--line)}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:24px}
+.stage{display:grid;gap:14px;align-content:start;padding:28px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.stage .step{font-family:var(--f-mono);font-size:.8rem;color:var(--sea);letter-spacing:.08em}
+.stage ul{margin:0;padding-left:1.1em}
+.stage li{margin-bottom:4px}
+.facts{margin-top:28px;overflow-x:auto}
+.facts table{width:100%;border-collapse:collapse;font-size:.97rem}
+.facts th,.facts td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.facts th{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400;width:30%}
+
+/* Retos */
+.retos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0;border-top:2px solid var(--ink)}
+.reto{padding:28px 24px 32px 0;display:grid;gap:14px;align-content:start;border-bottom:1px solid var(--line);min-width:0}
+.reto + .reto{padding-left:24px;border-left:1px solid var(--line)}
+@media (max-width:980px){.reto + .reto{padding-left:0;border-left:0}}
+.reto .k{font-family:var(--f-mono);font-size:.78rem;color:var(--sarg-ink);letter-spacing:.1em;text-transform:uppercase}
+.reto h3{font-size:clamp(1.6rem,2.6vw,2rem);font-weight:800;font-stretch:120%}
+.reto .q{font-size:1.05rem;font-style:italic;color:var(--ink)}
+.reto ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;color:var(--muted)}
+.reto li::before{content:"→ ";color:var(--sea)}
+
+.data-note{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px 20px;align-items:start;margin-top:32px;padding:20px 22px;border-radius:14px;background:var(--sea-soft)}
+.data-note .tag-api{font:600 .74rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:6px;background:var(--sea);color:var(--bg);white-space:nowrap}
+.data-note p{max-width:70ch}
+@media (max-width:560px){.data-note{grid-template-columns:1fr;gap:10px}.data-note .tag-api{justify-self:start}}
+
+/* Perfiles */
+.profiles{display:flex;flex-wrap:wrap;gap:10px}
+.profiles span{padding:9px 14px;border-radius:999px;background:var(--sea-soft);color:var(--ink);font-size:.95rem}
+
+/* Aliados */
+.ally-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:40px}
+.ally-grid h3{margin-bottom:14px}
+.ally-grid ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.ally-grid li{padding-left:22px;position:relative}
+.ally-grid li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:10px;border-radius:50%;background:var(--sarg)}
+.note{margin-top:36px;padding:18px 20px;border-radius:10px;background:var(--sarg-soft);color:var(--ink);max-width:760px}
+
+/* Impacto */
+.impact{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:24px}
+.impact div{display:grid;gap:6px}
+.impact .n{font-family:var(--f-display);font-weight:900;font-stretch:130%;font-size:clamp(2.6rem,5vw,3.6rem);color:var(--sea);line-height:1;font-variant-numeric:tabular-nums}
+.impact p{color:var(--muted)}
+
+/* Registro */
+.reg{background:var(--ink);color:var(--bg)}
+.reg .eyebrow{color:var(--sarg)}
+.reg .lede{color:color-mix(in srgb,var(--bg) 78%,var(--ink))}
+.reg-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(28px,5vw,64px);align-items:start}
+@media (max-width:900px){.reg-grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);color:var(--ink);border-radius:16px;padding:clamp(20px,3.5vw,32px)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:999px;background:var(--bg);margin-bottom:24px}
+.tabs button{font:600 .98rem var(--f-body);padding:11px 10px;border-radius:999px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+form{display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row{grid-template-columns:1fr}}
+.field{display:grid;gap:6px;min-width:0}
+label,.legend{font-weight:600;font-size:.92rem}
+.opt{font-weight:400;color:var(--muted)}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;font:inherit;font-size:1rem;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
+input:focus,select:focus,textarea:focus{border-color:var(--sea);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--sea) 25%,transparent)}
+textarea{min-height:96px;resize:vertical}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px;min-width:0}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--line);border-radius:9px;font-weight:500;font-size:.93rem;cursor:pointer;background:var(--bg)}
+.check input{margin-top:3px;accent-color:var(--sea)}
+.check:has(input:checked){border-color:var(--sea);background:var(--sea-soft)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--muted)}
+.consent input{margin-top:4px;accent-color:var(--sea)}
+.status{font-size:.95rem;padding:12px 14px;border-radius:9px}
+.status.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.status.err{background:color-mix(in srgb,var(--err) 14%,transparent);color:var(--err)}
+.status.info{background:var(--sarg-soft);color:var(--ink)}
+.side-list{display:grid;gap:18px;margin-top:28px}
+.side-list div{display:grid;gap:2px;padding-top:14px;border-top:1px solid color-mix(in srgb,var(--bg) 22%,var(--ink))}
+.side-list b{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sarg);font-weight:600}
+
+/* Organizadores */
+.orgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px}
+.org{padding:28px;border:1px solid var(--line);border-radius:14px;display:grid;gap:12px;align-content:start;background:var(--surface)}
+.org h3{font-size:1.5rem;font-weight:800;font-stretch:115%}
+.org p{color:var(--muted)}
+
+/* Ruta */
+.route{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;counter-reset:paso}
+.route li{position:relative;display:grid;gap:8px;align-content:start;padding:0 16px 0 0;min-width:0}
+.route li::before{counter-increment:paso;content:counter(paso);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:2px solid var(--sea);color:var(--sea);font:600 1rem var(--f-mono);background:var(--bg);position:relative;z-index:1}
+.route li::after{content:"";position:absolute;top:20px;left:40px;right:0;height:2px;background:var(--line)}
+.route li:last-child::after{display:none}
+.route li.now::before{background:var(--sarg);border-color:var(--sarg);color:#1B1203}
+.route h3{font-size:1.1rem;font-stretch:105%;margin-top:6px}
+.route .when{font-family:var(--f-mono);font-size:.76rem;color:var(--sarg-ink);letter-spacing:.04em}
+.route p{font-size:.93rem;color:var(--muted)}
+.pill{order:5;justify-self:start;margin-top:4px;font:600 .72rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:var(--sarg-soft);color:var(--sarg-ink)}
+@media (max-width:980px){
+  .route{grid-template-columns:1fr;gap:0}
+  .route li{grid-template-columns:40px minmax(0,1fr);column-gap:16px;padding:0 0 26px}
+  .route li::before{grid-row:1 / span 4}
+  .route li > *{grid-column:2}
+  .route li::after{top:40px;bottom:0;left:19px;right:auto;width:2px;height:auto}
+  .route h3{margin-top:0}
+}
+
+/* Propón un reto */
+.call{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start;margin-top:clamp(56px,8vw,96px);padding-top:clamp(40px,6vw,64px);border-top:2px solid var(--ink)}
+@media (max-width:900px){.call{grid-template-columns:1fr}}
+.call .intro{display:grid;gap:16px}
+.call h3{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;font-stretch:118%}
+.who{display:flex;flex-wrap:wrap;gap:8px}
+.who span{font-size:.9rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.needs{display:grid;gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.needs div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.needs div:last-child{border-bottom:0}
+.needs b{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sea);font-weight:600;padding-top:3px}
+@media (max-width:560px){.needs div{grid-template-columns:1fr;gap:4px}}
+.reto-extra{display:grid;gap:16px;padding:18px;border-radius:12px;background:var(--sea-soft)}
+.reto-extra .legend{font-size:1rem}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;border-top:2px solid var(--ink)}
+@media (max-width:860px){.faq{grid-template-columns:1fr}}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:18px 0;font-weight:600;font-size:1.05rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:600 1.3rem var(--f-mono);color:var(--sea);flex:none;transition:transform .2s ease}
+.faq details[open] summary::after{transform:rotate(45deg)}
+@media (prefers-reduced-motion: reduce){.faq summary::after{transition:none}}
+.faq details p{padding:0 0 20px;color:var(--muted);max-width:60ch}
+
+/* Contacto y redes */
+.mono-inline{font-family:var(--f-mono);font-size:.92em;overflow-wrap:anywhere}
+a.on-dark{color:var(--sarg)}
+.contact-line{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:4px}
+.copy{font:600 .8rem var(--f-body);padding:6px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--bg) 45%,var(--ink));background:transparent;color:var(--bg);cursor:pointer}
+.socials{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:6px}
+.org .ig{font-weight:600;text-decoration:none}
+.org .ig:hover{text-decoration:underline}
+.foot-links{display:flex;flex-wrap:wrap;gap:6px 18px}
+
+/* Footer */
+footer{padding-block:48px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+footer .wrap{display:grid;gap:28px}
+.refs{margin:0;padding-left:1.4em;display:grid;gap:6px;font-size:.82rem}
+.refs li{overflow-wrap:anywhere}
+.foot-line{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+/* Teléfonos */
+@media (max-width:560px){
+  body{font-size:16px}
+  section{padding-block:56px}
+  .hero .wrap{gap:22px}
+  .ctas .btn{flex:1 1 100%}
+  .facts th,.facts td{display:block;width:auto;padding:0}
+  .facts th{padding-top:14px}
+  .facts td{padding:4px 0 14px}
+  .facts tr{display:block;border-bottom:1px solid var(--line)}
+  .facts th,.facts td{border:0}
+  .stage,.org{padding:22px}
+  .reading{padding-right:0}
+  .reto{padding-right:0}
+  .tabs button{font-size:.9rem;padding:11px 6px}
+  .panel{padding:18px;border-radius:14px}
+  input[type=text],input[type=email],input[type=tel],select,textarea{font-size:16px}
+  .profiles span{font-size:.9rem;padding:8px 12px}
+}
+@media (max-width:360px){
+  .mark{font-size:1.1rem}
+  .nav .btn-sm{padding:8px 12px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#inicio">Hack<span>Sargazo</span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a class="hide-sm" href="#retos">Retos</a>
+      <a class="hide-sm" href="#ruta">Cómo participar</a>
+      <a class="hide-sm" href="#aliados">Aliados</a>
+      <a class="hide-sm" href="#faq">Preguntas</a>
+      <a class="btn btn-primary btn-sm" href="#registro">Me interesa</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio" style="padding-bottom:0">
+  <canvas id="drift" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="eyebrow">Hackatón · Caribe mexicano</p>
+    <h1>Hack<span class="s">Sargazo</span></h1>
+    <p class="tag">Hackeando soluciones para el futuro del Caribe mexicano.</p>
+    <div class="meta">
+      <span class="chip"><b>Fecha</b> <span data-cfg="dateText">Febrero 2027 · por confirmar</span></span>
+      <span class="chip"><b>Sede</b> <span data-cfg="venueText">Cancún y/o Playa del Carmen · por confirmar</span></span>
+      <span class="chip"><b>Inscripción</b> gratuita</span>
+    </div>
+    <div class="ctas">
+      <a class="btn btn-primary" href="#participar" data-tab="participar">Quiero participar</a>
+      <a class="btn btn-ghost" href="#aliados-form" data-tab="aliado">Quiero ser aliado</a>
+    </div>
+    <p class="by">Organizan <strong>Women Techmakers Quintana Roo</strong> y <strong>Riviera Maya Tech Builders</strong></p>
+  </div>
+  <div class="shore" aria-hidden="true">
+    <svg viewBox="0 0 1200 56" preserveAspectRatio="none"><path d="M0 30 C 150 10, 300 46, 450 28 S 750 8, 900 30 S 1100 46, 1200 24 L1200 56 L0 56 Z" fill="var(--bg)"/></svg>
+  </div>
+</section>
+
+<figure class="photo-band">
+  <img src="img/pelicano-sargazo-1600.webp" srcset="img/pelicano-sargazo-800.webp 800w, img/pelicano-sargazo-1600.webp 1600w" sizes="100vw" width="1600" height="1068" alt="Pelícano volando a ras de un extenso manto de sargazo dorado en el mar.">
+  <figcaption class="wrap">Un manto de sargazo en mar abierto, antes de llegar a la costa.</figcaption>
+</figure>
+
+<section id="problema">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">El problema</p>
+      <h2>Desde 2011, el sargazo llega a una escala sin precedentes.</h2>
+      <p class="lede">Las arribazones de <i>Sargassum natans</i> y <i>S. fluitans</i> pasaron de ser un fenómeno estacional menor a una crisis permanente para playas, ecosistemas, turismo y comunidades costeras. Las soluciones tecnológicas aplicadas todavía son pocas.</p>
+    </div>
+    <div class="readings">
+      <div class="reading"><span class="n">76,000<small>t</small></span><p>recolectadas por la SEMAR en los primeros meses de 2025.</p><span class="src">[3] Riviera Maya News, sep 2025</span></div>
+      <div class="reading"><span class="n">52,000<small>t</small></span><p>retiradas solo en Tulum durante el primer semestre de 2025.</p><span class="src">[4] Tulum Times, jul 2025</span></div>
+      <div class="reading"><span class="n">16,797<small>t</small></span><p>recolectadas en Semana Santa 2026, en unas pocas semanas.</p><span class="src">[5] Tulum Times, jul 2026</span></div>
+      <div class="reading"><span class="n">140<small>t</small></span><p>en Isla Mujeres en una sola noche, julio de 2025.</p><span class="src">[6] Mexico News Daily, jul 2025</span></div>
+    </div>
+    <div class="problem-text">
+      <div>
+        <img class="ph bottle" src="img/botella-sargazo-600.webp" srcset="img/botella-sargazo-600.webp 600w, img/botella-sargazo-1000.webp 1000w" sizes="(max-width: 700px) 100vw, 540px" width="1000" height="1333" loading="lazy" alt="Sargazo acumulado en la arena con una botella de plástico atrapada, frente a un mar turquesa.">
+        <h3>Impacto ambiental</h3>
+        <ul>
+          <li>Muerte de pastos marinos y corales por anoxia.</li>
+          <li>Ácido sulfhídrico (H₂S) en el agua costera durante la descomposición.</li>
+          <li>Alteración de playas de anidación de tortugas marinas.</li>
+          <li>En 2018 se alcanzaron hasta 2 m³ por metro lineal de playa y se declaró emergencia estatal.</li>
+        </ul>
+      </div>
+      <div>
+        <img class="ph" src="img/playa-familias-700.webp" srcset="img/playa-familias-700.webp 700w, img/playa-familias-1200.webp 1200w" sizes="(max-width: 700px) 100vw, 540px" width="1200" height="675" loading="lazy" alt="Familia caminando por la orilla de una playa caribeña junto a una franja de sargazo.">
+        <h3>Impacto económico y social</h3>
+        <ul>
+          <li>La temporada 2025 fue descrita por oceanógrafos como posiblemente la peor registrada, con un cinturón de sargazo 6 veces mayor.</li>
+          <li>Afectación directa a pescadores, prestadores de servicios turísticos y comunidades costeras.</li>
+          <li>Hay una ventana enorme para predecir, recolectar mejor y crear cadenas de valor con el sargazo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="formato" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Cómo funciona</p>
+      <h2>Dos etapas: primero aprendemos, luego construimos.</h2>
+      <p class="lede">Un hackatón es un evento intensivo donde equipos multidisciplinarios desarrollan prototipos para un problema concreto y los presentan ante un jurado. Aquí el problema es uno solo: el sargazo.</p>
+    </div>
+    <div class="stages">
+      <article class="stage">
+        <span class="step">ETAPA 1 · 2–3 SEMANAS ANTES</span>
+        <h3>Innovation Week</h3>
+        <p>Talleres y conferencias con especialistas en tecnología, innovación y medio ambiente, para llegar al hackatón con contexto científico y herramientas.</p>
+        <ul>
+          <li>6 talleres temáticos, gratuitos y abiertos al público</li>
+          <li>Sargazo, IA generativa, cloud computing, metodologías, pitching y greentech</li>
+          <li>Formato presencial y/o híbrido</li>
+        </ul>
+      </article>
+      <article class="stage">
+        <span class="step">ETAPA 2 · 1 DÍA</span>
+        <h3>Hackatón</h3>
+        <p>Equipos de 2 a 4 personas desarrollan un prototipo en 12 horas y lo presentan ante un jurado del sector público, privado y académico.</p>
+        <ul>
+          <li>Mentorías técnicas y de producto durante el evento</li>
+          <li>Pitch de 5 minutos por equipo</li>
+          <li>Exhibición abierta al público y ceremonia de premiación</li>
+        </ul>
+      </article>
+    </div>
+    <div class="facts">
+      <table>
+        <tbody>
+          <tr><th scope="row">Modalidad</th><td>Presencial, en una o dos sedes</td></tr>
+          <tr><th scope="row">Fecha</th><td><span data-cfg="dateLong">Febrero de 2027. La fecha exacta se anunciará junto con la sede.</span></td></tr>
+          <tr><th scope="row">Sede</th><td><span data-cfg="venueLong">Cancún y/o Playa del Carmen. La sede está por confirmar.</span></td></tr>
+          <tr><th scope="row">Duración</th><td>1 día, 12 horas de desarrollo</td></tr>
+          <tr><th scope="row">Equipos</th><td>2 a 4 integrantes</td></tr>
+          <tr><th scope="row">Cupo</th><td>50 a 100 participantes</td></tr>
+          <tr><th scope="row">Inscripción</th><td>Gratuita, mediante convocatoria abierta</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="retos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Los tres retos</p>
+      <h2>Monitorear, recolectar, transformar.</h2>
+    </div>
+    <div class="retos">
+      <article class="reto">
+        <span class="k">Reto · Antes de que llegue</span>
+        <h3>Monitoreo y predicción</h3>
+        <p class="q">¿Cómo podemos anticipar la llegada del sargazo con inteligencia artificial, datos y nuevas tecnologías?</p>
+        <ul><li>Modelos predictivos con IA y machine learning</li><li>Análisis de imágenes satelitales</li><li>Drones con sensores multiespectrales</li><li>Dashboards y alertas tempranas</li></ul>
+      </article>
+      <article class="reto">
+        <span class="k">Reto · En la playa y el mar</span>
+        <h3>Recolección</h3>
+        <p class="q">¿Cómo podemos optimizar la recolección con automatización, robótica o análisis de datos?</p>
+        <ul><li>Robótica autónoma marina y terrestre</li><li>Optimización logística con algoritmos</li><li>IoT para medir volúmenes</li><li>Dispositivos de bajo costo</li></ul>
+      </article>
+      <article class="reto">
+        <span class="k">Reto · Después</span>
+        <h3>Transformación</h3>
+        <p class="q">¿Cómo podemos convertir el sargazo en un recurso con valor económico y ambiental?</p>
+        <ul><li>Biomateriales y biocombustibles</li><li>Materiales de construcción sustentables</li><li>Fertilizantes y productos agrícolas</li><li>Economía circular y modelos de negocio</li></ul>
+      </article>
+    </div>
+    <div class="data-note">
+      <span class="tag-api">Datos reales</span>
+      <p>Los equipos inscritos tendrán acceso a la API de <a href="https://sargadb.org" target="_blank" rel="noopener">SargaDB</a>, un archivo abierto de datos del sargazo en la Riviera Maya que reúne monitoreo oficial, detección satelital y reportes ciudadanos.</p>
+    </div>
+  </div>
+</section>
+
+<section id="perfiles" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">¿Quién puede participar?</p>
+      <h2>Equipos que mezclan código, ciencia, diseño y negocio.</h2>
+      <p class="lede">No necesitas ser programador. Los mejores equipos combinan perfiles distintos.</p>
+    </div>
+    <div class="profiles">
+      <span>Estudiantes de ingeniería, ciencias, diseño y negocios</span>
+      <span>Desarrolladores de software</span>
+      <span>Científicos de datos</span>
+      <span>Ingenieros mecánicos, ambientales y electrónicos</span>
+      <span>Diseñadores UX/UI e industriales</span>
+      <span>Investigadores en ciencias del mar y medio ambiente</span>
+      <span>Emprendedores y especialistas en negocio</span>
+      <span>Makers y entusiastas de hardware</span>
+      <span>Comunidad tech de Quintana Roo y el sureste</span>
+    </div>
+  </div>
+</section>
+
+<section id="ruta">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Cómo participar</p>
+      <h2>Tu ruta hacia el hackatón.</h2>
+      <p class="lede">Las fechas exactas se anunciarán junto con la sede. Si te registras ahora, te avisamos en cada paso.</p>
+    </div>
+    <ol class="route">
+      <li class="now">
+        <span class="pill">Abierto ahora</span>
+        <h3>Registra tu interés</h3>
+        <span class="when" data-cfg="r1">Desde hoy</span>
+        <p>Déjanos tus datos para recibir la convocatoria antes que nadie.</p>
+      </li>
+      <li>
+        <h3>Convocatoria oficial</h3>
+        <span class="when" data-cfg="r2">Al confirmar sede y fecha</span>
+        <p>Publicamos bases, retos definitivos, premios y sede.</p>
+      </li>
+      <li>
+        <h3>Innovation Week</h3>
+        <span class="when" data-cfg="r3">2–3 semanas antes</span>
+        <p>Seis talleres gratuitos sobre sargazo, IA, cloud, metodologías y pitch.</p>
+      </li>
+      <li>
+        <h3>Forma tu equipo</h3>
+        <span class="when" data-cfg="r4">Antes del hackatón</span>
+        <p>Equipos de 2 a 4 personas. Si llegas sin equipo, te ayudamos a encontrar uno.</p>
+      </li>
+      <li>
+        <h3>Hackatón</h3>
+        <span class="when" data-cfg="r5">Febrero 2027 · 12 horas</span>
+        <p>Construyes un prototipo con mentoría y lo presentas en un pitch de 5 minutos.</p>
+      </li>
+      <li>
+        <h3>Seguimiento</h3>
+        <span class="when" data-cfg="r6">Después del evento</span>
+        <p>Los proyectos con potencial se vinculan con aliados para seguir creciendo.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="aliados">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Aliados y patrocinadores</p>
+      <h2>Conecta con talento que está resolviendo un problema real de la región.</h2>
+      <p class="lede">Buscamos universidades, centros de investigación, empresas, organizaciones civiles e instituciones de gobierno que quieran impulsar innovación abierta y sostenibilidad en el Caribe mexicano.</p>
+    </div>
+    <div class="ally-grid">
+      <div>
+        <h3>Formas de participar</h3>
+        <ul>
+          <li>Préstamo de instalaciones para el evento</li>
+          <li>Charla o taller en la Innovation Week</li>
+          <li>Mentorías técnicas durante el hackatón</li>
+          <li>Participación como jurado</li>
+          <li>Naming de un reto con una problemática real de tu organización</li>
+          <li>Alimentos y bebidas para participantes</li>
+          <li>Créditos cloud/IA, licencias o hardware para prototipos</li>
+          <li>Premios: económicos, becas o en especie</li>
+          <li>Difusión entre tu comunidad</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Lo que recibe tu organización</h3>
+        <ul>
+          <li>Logo en los materiales del evento</li>
+          <li>Presencia de marca en Innovation Week y hackatón</li>
+          <li>Menciones en redes sociales y durante el evento</li>
+          <li>Stand y networking, si lo deseas</li>
+          <li>Acceso a la base de talento participante</li>
+          <li>Visibilidad ante universidades, empresas y gobierno</li>
+          <li>Primera oportunidad para apoyar proyectos ganadores después del evento</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Los apoyos pueden ser en especie. Montos y condiciones se definen de forma personalizada con cada organización. <a href="#aliados-form" data-tab="aliado">Cuéntanos cómo te gustaría participar</a> o escríbenos a <span class="mono-inline" data-cfg="email">hola@rivieramaya.tech</span>.</p>
+
+    <div class="call" id="propon-reto">
+      <div class="intro">
+        <p class="eyebrow">Convocatoria de retos</p>
+        <h3>¿El sargazo le cuesta algo a tu organización? Conviértelo en un reto.</h3>
+        <p class="lede">Si tu organización enfrenta un problema concreto con el sargazo, propónlo como reto del hackatón. Equipos multidisciplinarios trabajarán en él durante 12 horas y tu organización le da nombre al reto.</p>
+        <div class="who" aria-label="Quién puede proponer">
+          <span>Hoteles y turismo</span><span>Municipios y gobierno</span><span>Cooperativas pesqueras</span><span>Centros de investigación</span><span>Empresas de recolección o transformación</span><span>Organizaciones civiles</span>
+        </div>
+        <div><a class="btn btn-primary" href="#aliados-form" data-tab="aliado" data-reto>Proponer un reto</a></div>
+      </div>
+      <div class="needs" aria-label="Qué necesita un reto">
+        <div><b>Problema</b><span>Una situación real y acotada. Por ejemplo: "no sabemos con 24 horas de anticipación cuánto sargazo llegará a nuestra playa".</span></div>
+        <div><b>Datos</b><span>Información que los equipos puedan usar: registros propios, fotos, volúmenes recolectados o fuentes públicas que conozcas.</span></div>
+        <div><b>Contacto</b><span>Una persona de tu organización que explique el reto y, si es posible, acompañe como mentora el día del evento.</span></div>
+        <div><b>Recibes</b><span>Naming del reto, equipos trabajando en tu problema, visibilidad como aliado y primera oportunidad para impulsar las soluciones ganadoras.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="impacto" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Impacto esperado</p>
+      <h2>Un primer paso para un evento anual.</h2>
+      <p class="lede">Queremos que los proyectos más prometedores sigan después del evento, con incubación, mentoría o vinculación con instituciones que puedan implementarlos.</p>
+    </div>
+    <div class="impact">
+      <div><span class="n">50–100</span><p>participantes de varias disciplinas</p></div>
+      <div><span class="n">15–20</span><p>prototipos funcionales en un día</p></div>
+      <div><span class="n">200+</span><p>asistentes acumulados a los talleres de Innovation Week</p></div>
+      <div><span class="n">3</span><p>retos: monitoreo, recolección y transformación</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-band" aria-label="Invitación">
+  <img src="img/playa-atardecer-1600.webp" srcset="img/playa-atardecer-800.webp 800w, img/playa-atardecer-1600.webp 1600w" sizes="100vw" width="1600" height="1003" loading="lazy" alt="">
+  <div class="wrap">
+    <blockquote>Los grandes desafíos requieren colaboración.</blockquote>
+    <p>Universidades, centros de investigación, empresas, organizaciones civiles, gobierno y comunidad tech: súmate a HackSargazo.</p>
+  </div>
+</section>
+
+<section id="registro" class="reg">
+  <div class="wrap reg-grid">
+    <div>
+      <p class="eyebrow">Registro de interés</p>
+      <h2 style="margin-top:14px">Súmate desde ahora.</h2>
+      <p class="lede" style="margin-top:16px">Todavía no abrimos la convocatoria. Déjanos tus datos y te avisaremos primero cuando confirmemos fecha y sede.</p>
+      <div class="side-list">
+        <div><b>Participantes</b><span>Registro sin costo. Te avisamos cuando abra la convocatoria y la Innovation Week.</span></div>
+        <div><b>Aliados</b><span>Te contactamos para conversar sobre la forma de apoyo que mejor le funcione a tu organización.</span></div>
+        <div><b>Ponentes y voluntariado</b><span>¿Quieres dar una charla o ayudar en la organización? <a class="on-dark" data-cfg-href="googleForm" href="https://docs.google.com/forms/d/e/1FAIpQLSfMEZcPkq8VluRO24-nsNRbM3sDmgrDYryF5pZ1R4jVhM_d_w/viewform" target="_blank" rel="noopener">Llena la convocatoria de colaboradores</a>.</span></div>
+        <div><b>Contacto</b>
+          <span class="contact-line"><a class="on-dark mono-inline" data-cfg-href="email" href="mailto:hola@rivieramaya.tech"><span data-cfg="email">hola@rivieramaya.tech</span></a> <button type="button" class="copy" data-copy>Copiar</button></span>
+          <span class="socials"><a class="on-dark" href="https://www.instagram.com/wtm.qroo/" target="_blank" rel="noopener">Instagram @wtm.qroo</a><a class="on-dark" href="https://www.instagram.com/rivieramayatech" target="_blank" rel="noopener">Instagram @rivieramayatech</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="participar">
+      <span id="aliados-form" style="position:relative;top:-90px"></span>
+      <div class="tabs" role="tablist" aria-label="Tipo de registro">
+        <button type="button" role="tab" id="tab-participar" aria-controls="form-participar" aria-selected="true">Quiero participar</button>
+        <button type="button" role="tab" id="tab-aliado" aria-controls="form-aliado" aria-selected="false">Quiero ser aliado</button>
+      </div>
+
+      <form id="form-participar" role="tabpanel" aria-labelledby="tab-participar" novalidate>
+        <div class="row">
+          <div class="field"><label for="p-nombre">Nombre</label><input id="p-nombre" name="nombre" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="p-correo">Correo</label><input id="p-correo" name="correo" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="p-ciudad">Ciudad</label>
+            <select id="p-ciudad" name="ciudad" required>
+              <option value="">Elige una opción</option>
+              <option>Cancún</option><option>Playa del Carmen</option><option>Tulum</option><option>Puerto Morelos</option><option>Cozumel</option><option>Chetumal</option><option>Mérida</option><option>Otra</option>
+            </select></div>
+          <div class="field"><label for="p-perfil">Perfil</label>
+            <select id="p-perfil" name="perfil" required>
+              <option value="">Elige una opción</option>
+              <option>Estudiante</option><option>Desarrollo de software</option><option>Ciencia de datos / IA</option><option>Ingeniería (mecánica, ambiental, electrónica)</option><option>Diseño UX/UI o industrial</option><option>Investigación (ciencias del mar, medio ambiente)</option><option>Emprendimiento / negocios</option><option>Maker / hardware</option><option>Otro</option>
+            </select></div>
+        </div>
+        <div class="field"><label for="p-org">Escuela u organización <span class="opt">(opcional)</span></label><input id="p-org" name="organizacion" type="text" autocomplete="organization"></div>
+        <fieldset>
+          <span class="legend">¿Qué reto te interesa? <span class="opt">(puedes elegir varios)</span></span>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="retos" value="Monitoreo y predicción"> Monitoreo y predicción</label>
+            <label class="check"><input type="checkbox" name="retos" value="Recolección"> Recolección</label>
+            <label class="check"><input type="checkbox" name="retos" value="Transformación"> Transformación</label>
+          </div>
+        </fieldset>
+        <div class="row">
+          <div class="field"><label for="p-equipo">¿Ya tienes equipo?</label>
+            <select id="p-equipo" name="equipo"><option value="">Elige una opción</option><option>Sí, ya tengo equipo</option><option>Tengo parte del equipo</option><option>No, quiero formar uno ahí</option></select></div>
+          <div class="field"><label for="p-iw">¿Te interesa la Innovation Week?</label>
+            <select id="p-iw" name="innovation_week"><option value="">Elige una opción</option><option>Sí, quiero ir a los talleres</option><option>Tal vez</option><option>Solo el hackatón</option></select></div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="p-web">Sitio web</label><input id="p-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input type="checkbox" id="p-consent" name="consentimiento" required> <span>Acepto el <a href="codigo-de-conducta.html" target="_blank">código de conducta</a> y que Women Techmakers Quintana Roo y Riviera Maya Tech Builders usen mis datos solo para contactarme sobre HackSargazo.</span></label>
+        <button class="btn btn-primary" type="submit">Registrar mi interés</button>
+        <div class="status" role="status" aria-live="polite" hidden></div>
+      </form>
+
+      <form id="form-aliado" role="tabpanel" aria-labelledby="tab-aliado" novalidate hidden>
+        <div class="row">
+          <div class="field"><label for="a-org">Organización</label><input id="a-org" name="organizacion" type="text" autocomplete="organization" required></div>
+          <div class="field"><label for="a-tipo">Tipo de organización</label>
+            <select id="a-tipo" name="tipo" required>
+              <option value="">Elige una opción</option><option>Empresa</option><option>Universidad</option><option>Centro de investigación</option><option>Organización civil</option><option>Gobierno</option><option>Comunidad tech</option><option>Otro</option>
+            </select></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="a-nombre">Nombre de contacto</label><input id="a-nombre" name="nombre" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="a-cargo">Cargo <span class="opt">(opcional)</span></label><input id="a-cargo" name="cargo" type="text" autocomplete="organization-title"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="a-correo">Correo</label><input id="a-correo" name="correo" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="a-tel">Teléfono / WhatsApp <span class="opt">(opcional)</span></label><input id="a-tel" name="telefono" type="tel" autocomplete="tel"></div>
+        </div>
+        <fieldset>
+          <span class="legend">¿Cómo te gustaría participar?</span>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="apoyo" value="Venue"> Instalaciones (venue)</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Charla Innovation Week"> Charla o taller</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Mentoría"> Mentoría</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Jurado"> Jurado</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Proponer un reto" id="a-reto"> Proponer un reto</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Alimentos y bebidas"> Alimentos y bebidas</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Créditos cloud/IA o hardware"> Créditos cloud/IA o hardware</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Premios"> Premios</label>
+            <label class="check"><input type="checkbox" name="apoyo" value="Difusión"> Difusión</label>
+          </div>
+        </fieldset>
+        <div class="reto-extra" id="a-reto-extra" hidden>
+          <span class="legend">Cuéntanos sobre el reto</span>
+          <div class="field"><label for="a-reto-problema">¿Qué problema quieres resolver?</label><textarea id="a-reto-problema" name="reto_problema" placeholder="Describe la situación, dónde ocurre y a quién afecta."></textarea></div>
+          <div class="row">
+            <div class="field"><label for="a-reto-eje">Eje más cercano</label>
+              <select id="a-reto-eje" name="reto_eje"><option value="">Elige una opción</option><option>Monitoreo y predicción</option><option>Recolección</option><option>Transformación</option><option>Otro / no estoy seguro</option></select></div>
+            <div class="field"><label for="a-reto-datos">¿Cuentan con datos?</label>
+              <select id="a-reto-datos" name="reto_datos"><option value="">Elige una opción</option><option>Sí, datos propios</option><option>Conocemos fuentes públicas</option><option>Todavía no</option></select></div>
+          </div>
+        </div>
+        <div class="field"><label for="a-msg">Mensaje <span class="opt">(opcional)</span></label><textarea id="a-msg" name="mensaje" placeholder="Cuéntanos qué te interesa o qué problemática de tu organización podría ser un reto."></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="a-web">Sitio web</label><input id="a-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input type="checkbox" id="a-consent" name="consentimiento" required> <span>Acepto el <a href="codigo-de-conducta.html" target="_blank">código de conducta</a> y que los organizadores de HackSargazo me contacten sobre esta iniciativa.</span></label>
+        <button class="btn btn-primary" type="submit">Quiero ser aliado</button>
+        <div class="status" role="status" aria-live="polite" hidden></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2>Lo que más nos preguntan.</h2>
+    </div>
+    <div class="faq">
+      <div>
+        <details><summary>¿Necesito saber programar?</summary><p>No. Buscamos equipos multidisciplinarios: diseño, ciencias del mar, ingeniería, negocios y hardware aportan tanto como el código. Muchos de los mejores prototipos combinan perfiles distintos.</p></details>
+        <details><summary>¿Cuánto cuesta participar?</summary><p>Nada. La inscripción al hackatón y los talleres de la Innovation Week son gratuitos.</p></details>
+        <details><summary>¿Puedo participar sin equipo?</summary><p>Sí. Los equipos son de 2 a 4 personas. Si te registras sin equipo, te ayudaremos a conectar con otras personas antes y al inicio del evento.</p></details>
+        <details><summary>¿Cuándo y dónde será?</summary><p><span data-cfg="faqWhen">En febrero de 2027, en Cancún, Playa del Carmen o ambas ciudades. Anunciaremos la fecha y la sede en cuanto estén confirmadas; si registras tu interés, te avisamos primero.</span></p></details>
+        <details><summary>¿Es presencial o en línea?</summary><p>El hackatón es presencial. Algunos talleres de la Innovation Week podrán seguirse en línea.</p></details>
+        <details><summary>¿Tengo que ir a la Innovation Week?</summary><p>No es obligatoria, pero sí muy recomendable: ahí conocerás el contexto científico del sargazo, herramientas técnicas y a otras personas para formar equipo.</p></details>
+      </div>
+      <div>
+        <details><summary>¿Qué tengo que llevar?</summary><p>Tu laptop y cargador. Si tu idea incluye hardware (sensores, microcontroladores, drones), trae tus componentes. Compartiremos una lista más detallada con la convocatoria.</p></details>
+        <details><summary>¿Habrá comida?</summary><p>Estamos trabajando con aliados para ofrecer alimentos y bebidas durante el evento. Lo confirmaremos en la convocatoria.</p></details>
+        <details><summary>¿Hay premios?</summary><p>Sí. Los premios dependerán de nuestros aliados y pueden incluir apoyos económicos, becas, créditos tecnológicos y premios en especie. Los publicaremos con la convocatoria.</p></details>
+        <details><summary>¿De quién es el proyecto que desarrolle?</summary><p>De tu equipo. Los aliados pueden tener primera oportunidad para apoyar o impulsar proyectos ganadores, pero eso siempre se acuerda con el equipo.</p></details>
+        <details><summary>¿Hay una edad mínima?</summary><p>Las bases de participación, incluida la edad mínima, se publicarán con la convocatoria oficial.</p></details>
+        <details><summary>¿Cómo puedo dar una charla o ser voluntario?</summary><p>Llena la <a data-cfg-href="googleForm" href="https://docs.google.com/forms/d/e/1FAIpQLSfMEZcPkq8VluRO24-nsNRbM3sDmgrDYryF5pZ1R4jVhM_d_w/viewform" target="_blank" rel="noopener">convocatoria de colaboradores</a> o escríbenos a <span class="mono-inline" data-cfg="email">hola@rivieramaya.tech</span>.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="organizadores">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Organizadores</p>
+      <h2>Dos comunidades tech de Quintana Roo.</h2>
+    </div>
+    <div class="orgs">
+      <article class="org">
+        <h3>Women Techmakers Quintana Roo</h3>
+        <p>Capítulo local de Women Techmakers, programa global que da visibilidad, comunidad y recursos a mujeres en tecnología. Organiza eventos, talleres y networking para impulsar la participación femenina en el ecosistema tech del sureste de México.</p>
+        <a class="ig" href="https://www.instagram.com/wtm.qroo/" target="_blank" rel="noopener">Instagram · @wtm.qroo</a>
+      </article>
+      <article class="org">
+        <h3>Riviera Maya Tech Builders</h3>
+        <p>Comunidad que conecta a desarrolladores, emprendedores, diseñadores y entusiastas de la innovación en la Riviera Maya, a través de meetups, hackatones y proyectos colaborativos.</p>
+        <a class="ig" href="https://www.instagram.com/rivieramayatech" target="_blank" rel="noopener">Instagram · @rivieramayatech</a>
+      </article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" style="margin-bottom:10px">Referencias</p>
+      <ol class="refs">
+        <li>UNAM, Grupo Interdisciplinario de Estudios del Sargazo (GIES). sargazo.unam.mx</li>
+        <li>Sargassum Information Hub (2024). "Mexico – Sargassum impacts and response." sargassumhub.org</li>
+        <li>Riviera Maya News (sep 2025). "Secretaría de Marina reports 76,000 tons of sargassum collected so far in 2025."</li>
+        <li>Tulum Times (jul 2025). "Tulum retira más de 52,000 toneladas de sargazo de sus playas en limpieza masiva 2025."</li>
+        <li>Tulum Times (jul 2026). "Quintana Roo Accelerates Sargassum Management With Federal Biorefinery Shift."</li>
+        <li>Mexico News Daily (jul 2025). "The sargassum just keeps coming to the Quintana Roo coast."</li>
+        <li>Tulum Times (may 2025). "How Riviera Maya is battling 2025's worst sargassum wave."</li>
+      </ol>
+    </div>
+    <p class="credits">Fotos en <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>: <a href="https://unsplash.com/photos/Y3eMgde6EI4" target="_blank" rel="noopener">Karl Callwood</a>, <a href="https://unsplash.com/photos/z56kWLr9cMU" target="_blank" rel="noopener">Naja Bertolt Jensen</a>, <a href="https://unsplash.com/photos/CLiPoZ-rYkw" target="_blank" rel="noopener">Margo Evardson</a> y <a href="https://unsplash.com/photos/eJySgLy2xTI" target="_blank" rel="noopener">Thor Tryggvason</a>.</p>
+    <div class="foot-line">
+      <span>HackSargazo · Women Techmakers Quintana Roo × Riviera Maya Tech Builders</span>
+      <span class="foot-links"><a data-cfg-href="email" href="mailto:hola@rivieramaya.tech"><span data-cfg="email">hola@rivieramaya.tech</span></a><a href="https://www.instagram.com/wtm.qroo/" target="_blank" rel="noopener">@wtm.qroo</a><a href="https://www.instagram.com/rivieramayatech" target="_blank" rel="noopener">@rivieramayatech</a><a href="codigo-de-conducta.html">Código de conducta</a></span>
+      <span data-cfg="dateText">Febrero 2027 · por confirmar</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ===== CONFIGURACIÓN: editar aquí ===== */
+const CONFIG = {
+  // URL de la implementación web de Google Apps Script (termina en /exec). Vacío = modo vista previa.
+  FORM_ENDPOINT: "",
+  // Al confirmar fecha y sede, cambia estos textos:
+  dateText: "Febrero 2027 · por confirmar",
+  dateLong: "Febrero de 2027. La fecha exacta se anunciará junto con la sede.",
+  venueText: "Cancún y/o Playa del Carmen · por confirmar",
+  venueLong: "Cancún y/o Playa del Carmen. La sede está por confirmar.",
+  email: "hola@rivieramaya.tech",
+  // Ruta de participación: cambia cada fecha cuando se confirme
+  r1: "Desde hoy",
+  r2: "Al confirmar sede y fecha",
+  r3: "2–3 semanas antes",
+  r4: "Antes del hackatón",
+  r5: "Febrero 2027 · 12 horas",
+  r6: "Después del evento",
+  faqWhen: "En febrero de 2027, en Cancún, Playa del Carmen o ambas ciudades. Anunciaremos la fecha y la sede en cuanto estén confirmadas; si registras tu interés, te avisamos primero.",
+  // Convocatoria de colaboradores (ponentes, aliados, voluntariado) en Google Forms
+  googleForm: "https://docs.google.com/forms/d/e/1FAIpQLSfMEZcPkq8VluRO24-nsNRbM3sDmgrDYryF5pZ1R4jVhM_d_w/viewform"
+};
+/* ====================================== */
+
+document.querySelectorAll("[data-cfg]").forEach(el => {
+  const v = CONFIG[el.dataset.cfg];
+  if (v) el.textContent = v;
+});
+document.querySelectorAll("[data-cfg-href]").forEach(el => {
+  const k = el.dataset.cfgHref;
+  if (k === "email") el.href = "mailto:" + CONFIG.email;
+  else if (CONFIG[k]) el.href = CONFIG[k];
+});
+// Copiar correo
+document.querySelectorAll("[data-copy]").forEach(btn => btn.addEventListener("click", () => {
+  const done = () => { const t = btn.textContent; btn.textContent = "Copiado"; setTimeout(() => btn.textContent = t, 1600); };
+  const fallback = () => { const el = btn.parentElement.querySelector("[data-cfg='email']"); const sel = getSelection(); const rg = document.createRange(); rg.selectNodeContents(el); sel.removeAllRanges(); sel.addRange(rg); };
+  try { navigator.clipboard.writeText(CONFIG.email).then(done, fallback); } catch(_) { fallback(); }
+}));
+
+// Pestañas
+const tabs = { participar: document.getElementById("tab-participar"), aliado: document.getElementById("tab-aliado") };
+const forms = { participar: document.getElementById("form-participar"), aliado: document.getElementById("form-aliado") };
+function showTab(key){
+  Object.keys(tabs).forEach(k => {
+    const on = k === key;
+    tabs[k].setAttribute("aria-selected", on ? "true" : "false");
+    forms[k].hidden = !on;
+  });
+}
+tabs.participar.addEventListener("click", () => showTab("participar"));
+tabs.aliado.addEventListener("click", () => showTab("aliado"));
+document.querySelectorAll("[data-tab]").forEach(a => a.addEventListener("click", () => {
+  showTab(a.dataset.tab);
+  if (a.hasAttribute("data-reto")) { const cb = document.getElementById("a-reto"); cb.checked = true; syncReto(); }
+}));
+// Campos extra al proponer un reto
+const retoCb = document.getElementById("a-reto"), retoExtra = document.getElementById("a-reto-extra");
+function syncReto(){ retoExtra.hidden = !retoCb.checked; }
+retoCb.addEventListener("change", syncReto);
+if (location.hash === "#aliados-form") showTab("aliado");
+if (location.hash === "#propon-reto") { showTab("aliado"); }
+
+// Envío
+function payloadFrom(form, tipo){
+  const fd = new FormData(form);
+  const out = { tipo_registro: tipo, enviado: new Date().toISOString(), pagina: location.href.split("#")[0] };
+  for (const [k, v] of fd.entries()){
+    if (k === "website") continue;
+    out[k] = out[k] ? out[k] + ", " + v : v;
+  }
+  out.consentimiento = fd.get("consentimiento") ? "sí" : "no";
+  return out;
+}
+function setStatus(form, kind, msg){
+  const s = form.querySelector(".status");
+  s.className = "status " + kind; s.textContent = msg; s.hidden = false;
+}
+function validate(form){
+  for (const el of form.querySelectorAll("[required]")){
+    const bad = el.type === "checkbox" ? !el.checked : !el.value.trim() || (el.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+    if (bad){
+      el.focus();
+      const name = el.type === "checkbox" ? "el consentimiento" : (form.querySelector('label[for="'+el.id+'"]')?.childNodes[0].textContent.trim().toLowerCase() || "este campo");
+      return el.type === "email" && el.value.trim() ? "Revisa el correo: parece incompleto." : "Falta completar " + name + ".";
+    }
+  }
+  return "";
+}
+async function handleSubmit(e, tipo){
+  e.preventDefault();
+  const form = e.target;
+  if (form.querySelector('[name="website"]').value) return; // bot
+  const err = validate(form);
+  if (err){ setStatus(form, "err", err); return; }
+  const btn = form.querySelector('button[type="submit"]');
+  const data = payloadFrom(form, tipo);
+  if (!CONFIG.FORM_ENDPOINT){
+    setStatus(form, "info", "Vista previa: el formulario funciona, pero aún no está conectado a la hoja de registros, así que estos datos no se guardaron.");
+    return;
+  }
+  btn.disabled = true; const label = btn.textContent; btn.textContent = "Enviando…";
+  try{
+    await fetch(CONFIG.FORM_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
+    form.reset();
+    if (tipo === "aliado") syncReto();
+    setStatus(form, "ok", tipo === "aliado" ? "¡Gracias! Recibimos tus datos y te contactaremos pronto." : "¡Listo! Te avisaremos cuando abra la convocatoria.");
+  } catch(_){
+    setStatus(form, "err", "No pudimos enviar el registro. Revisa tu conexión e inténtalo de nuevo.");
+  } finally { btn.disabled = false; btn.textContent = label; }
+}
+forms.participar.addEventListener("submit", e => handleSubmit(e, "participante"));
+forms.aliado.addEventListener("submit", e => handleSubmit(e, "aliado"));
+
+// Sargazo a la deriva en el hero
+(function(){
+  const c = document.getElementById("drift"); if (!c || !c.getContext) return;
+  const ctx = c.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W=0,H=0,clumps=[],color="#B87A1C";
+  function readColor(){ color = getComputedStyle(document.documentElement).getPropertyValue("--sarg").trim() || color; }
+  function seed(){
+    const r = c.getBoundingClientRect(), dpr = Math.min(devicePixelRatio||1, 2);
+    W = r.width; H = r.height; c.width = W*dpr; c.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const n = Math.round(Math.min(38, W/34));
+    clumps = Array.from({length:n}, () => {
+      const nodes = 5 + Math.floor(Math.random()*7), base = 3 + Math.random()*6;
+      return { x: Math.random()*W, y: H*0.15 + Math.random()*H*0.8, v: 0.08 + Math.random()*0.22, ph: Math.random()*6.28,
+        nodes: Array.from({length:nodes}, () => ({ dx:(Math.random()-0.5)*base*6, dy:(Math.random()-0.5)*base*3, r: base*(0.4+Math.random()*0.7) })) };
+    });
+  }
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = color;
+    for (const k of clumps){
+      const bob = Math.sin(t/1400 + k.ph) * 3;
+      ctx.globalAlpha = 0.16 + 0.12 * (k.y / H);
+      for (const n of k.nodes){ ctx.beginPath(); ctx.arc(k.x+n.dx, k.y+n.dy+bob, n.r, 0, 6.283); ctx.fill(); }
+      if (!reduce){ k.x += k.v; if (k.x > W + 40) { k.x = -40; k.y = H*0.15 + Math.random()*H*0.8; } }
+    }
+    ctx.globalAlpha = 1;
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  readColor(); seed(); requestAnimationFrame(draw);
+  addEventListener("resize", () => { seed(); if (reduce) requestAnimationFrame(draw); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => { readColor(); if (reduce) requestAnimationFrame(draw); });
+  new MutationObserver(() => { readColor(); if (reduce) requestAnimationFrame(draw); }).observe(document.documentElement, { attributes:true, attributeFilter:["data-theme"] });
+})();
+</script>
+</body>
+</html>

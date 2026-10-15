@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Código de conducta · HackSargazo</title>
+<meta name="description" content="Código de conducta de HackSargazo: cómo esperamos que nos tratemos y cómo reportar un problema.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..150,500..900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F2F7F6; --surface:#FFFFFF; --ink:#0D2A2F; --muted:#4A6468; --line:#D2E1DF;
+  --sea:#0A6A70; --sea-soft:#DCEFEE; --sarg:#B87A1C; --sarg-ink:#8A5911; --sarg-soft:#F6EAD4;
+  --f-display:"Anybody","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#06191D; --surface:#0C262B; --ink:#E4EFED; --muted:#9BB4B2; --line:#1C3D43;
+  --sea:#52C2BE; --sea-soft:#0F3539; --sarg:#E2A443; --sarg-ink:#EDBA63; --sarg-soft:#2A2312; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#06191D; --surface:#0C262B; --ink:#E4EFED; --muted:#9BB4B2; --line:#1C3D43;
+  --sea:#52C2BE; --sea-soft:#0F3539; --sarg:#E2A443; --sarg-ink:#EDBA63; --sarg-soft:#2A2312; color-scheme:dark }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--sea)}
+:focus-visible{outline:3px solid var(--sarg);outline-offset:2px;border-radius:4px}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{max-width:1120px;display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:14px}
+.mark{font-family:var(--f-display);font-weight:900;font-stretch:125%;font-size:1.25rem;text-decoration:none;color:var(--ink)}
+.mark span{color:var(--sarg)}
+.back{font-weight:600;font-size:.95rem;text-decoration:none}
+main{padding-block:clamp(48px,8vw,88px)}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sarg-ink);margin:0 0 14px}
+h1,h2{font-family:var(--f-display);line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,7vw,4rem);font-weight:900;font-stretch:120%;letter-spacing:-.015em}
+h2{font-size:clamp(1.4rem,3vw,1.75rem);font-weight:800;font-stretch:112%;margin:48px 0 14px}
+p{margin:0 0 14px}
+.lede{font-size:1.15rem;color:var(--muted);margin-top:18px}
+.meta{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+ul{margin:0 0 14px;padding-left:1.2em}
+li{margin-bottom:6px}
+.short{margin-top:36px;padding:22px 24px;border-radius:14px;background:var(--sea-soft)}
+.short h2{margin-top:0}
+.short p:last-child{margin-bottom:0}
+.report{margin-top:16px;padding:22px 24px;border-radius:14px;border:2px solid var(--sarg);background:var(--surface)}
+.report p:last-child{margin-bottom:0}
+.mono{font-family:var(--f-mono);font-size:.95em;overflow-wrap:anywhere}
+footer{border-top:1px solid var(--line);padding-block:32px;font-size:.88rem;color:var(--muted)}
+footer p{margin:0 0 8px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="index.html">Hack<span>Sargazo</span></a>
+    <a class="back" href="index.html">← Volver al inicio</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="eyebrow">HackSargazo</p>
+  <h1>Código de conducta</h1>
+  <p class="lede">Queremos que HackSargazo sea un espacio seguro, respetuoso y acogedor para todas las personas, sin importar su experiencia técnica o de dónde vengan. Participar implica aceptar este código.</p>
+  <p class="meta">Versión 1 · octubre de 2026</p>
+
+  <section class="short">
+    <h2>La versión corta</h2>
+    <p>No toleramos el acoso por motivos de género, identidad o expresión de género, orientación sexual, edad, discapacidad, apariencia física, tamaño corporal, origen étnico, nacionalidad, lengua, religión, nivel de experiencia técnica o lenguaje de programación.</p>
+    <p>El lenguaje y las imágenes sexuales no son apropiados en ningún espacio del evento: talleres, charlas, pitches, redes sociales ni canales en línea.</p>
+    <p>Quien rompa estas reglas puede recibir una advertencia o ser expulsado del evento, a criterio de la organización.</p>
+  </section>
+
+  <h2>A quién y dónde aplica</h2>
+  <p>A todas las personas que participan en HackSargazo: participantes, mentoras y mentores, jurado, ponentes, aliados y patrocinadores, voluntariado y equipo organizador.</p>
+  <p>Aplica en todas las actividades del evento: los talleres de la Innovation Week (presenciales o en línea), el hackatón, los eventos sociales relacionados y los canales en línea del evento, como grupos de mensajería y redes sociales.</p>
+
+  <h2>Lo que esperamos de todas las personas</h2>
+  <ul>
+    <li>Trata a las demás personas con respeto y amabilidad, aunque no estés de acuerdo con ellas.</li>
+    <li>Incluye a todo tu equipo: escucha, reparte el trabajo y valora los perfiles que no son técnicos.</li>
+    <li>Ayuda a quien está empezando. Nadie nace sabiendo y todos los niveles son bienvenidos.</li>
+    <li>Da crédito al código, los datos y las ideas de otras personas, y respeta sus licencias.</li>
+    <li>Si tu proyecto usa datos de personas o comunidades reales, cuida su privacidad y su autoría.</li>
+    <li>Cuida las instalaciones y los materiales de la sede.</li>
+  </ul>
+
+  <h2>Qué consideramos acoso</h2>
+  <ul>
+    <li>Comentarios ofensivos relacionados con cualquiera de las características de la versión corta.</li>
+    <li>Imágenes sexuales en espacios públicos o en las presentaciones.</li>
+    <li>Intimidación, acecho o seguimiento deliberados.</li>
+    <li>Tomar fotos o grabar audio o video de alguien sin su consentimiento.</li>
+    <li>Interrumpir de forma reiterada charlas, talleres u otras actividades.</li>
+    <li>Contacto físico inapropiado.</li>
+    <li>Atención sexual no deseada.</li>
+    <li>Proyectos que incumplan este código.</li>
+  </ul>
+  <p>Si alguien te pide que detengas un comportamiento, se espera que lo hagas de inmediato.</p>
+
+  <h2>Fotos y grabaciones</h2>
+  <p>La organización tomará fotos y video para difundir el evento. Si no quieres aparecer, avísale al equipo organizador y lo respetaremos. Nunca se permite fotografiar a personas en baños ni en espacios donde se espera privacidad.</p>
+
+  <h2>Aliados y patrocinadores</h2>
+  <p>Las organizaciones aliadas, sus representantes y su voluntariado también deben cumplir este código. Sus stands, materiales y presentaciones no deben incluir contenido sexual ni discriminatorio.</p>
+
+  <h2>Cómo reportar</h2>
+  <div class="report">
+    <p>Si sufres acoso, ves que alguien lo sufre o tienes cualquier otra preocupación, acércate de inmediato a cualquier persona del equipo organizador o escríbenos a <span class="mono">hola@rivieramaya.tech</span>.</p>
+    <p>Trataremos tu reporte con confidencialidad. Podemos ayudarte a contactar a la seguridad de la sede o a las autoridades, acompañarte o hacer lo que necesites para que te sientas segura o seguro durante el evento.</p>
+    <p>En una emergencia, llama al <strong>911</strong>.</p>
+  </div>
+
+  <h2>Consecuencias</h2>
+  <p>Ante una conducta que incumpla este código, la organización puede tomar las medidas que considere adecuadas, entre ellas:</p>
+  <ul>
+    <li>Advertir a la persona.</li>
+    <li>Pedirle que abandone una actividad o el evento.</li>
+    <li>Descalificar su proyecto.</li>
+    <li>Impedir su participación en ediciones futuras.</li>
+    <li>Reportar los hechos a las autoridades.</li>
+  </ul>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Adaptado del <a href="https://hackcodeofconduct.org/" target="_blank" rel="noopener">Hack Code of Conduct</a> (licencia MIT).</p>
+    <p>HackSargazo · Women Techmakers Quintana Roo × Riviera Maya Tech Builders</p>
+  </div>
+</footer>
+</body>
+</html>
