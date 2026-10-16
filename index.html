@@ -142,13 +142,12 @@ section{padding-block:clamp(64px,9vw,112px)}
 @media (max-width:560px){.data-note{grid-template-columns:1fr;gap:10px}.data-note .tag-api{justify-self:start}}
 
 /* Por qué participar */
-.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+.why{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
 @media (max-width:900px){.why{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:600px){.why{grid-template-columns:1fr}}
-.why article{display:grid;gap:10px;align-content:start;padding:26px 24px 30px 0;border-bottom:1px solid var(--line);min-width:0}
-.why .k{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sarg-ink)}
-.why h3{font-size:1.3rem;font-stretch:110%}
-.why p{color:var(--muted)}
+.why li{display:grid;gap:4px;align-content:start;padding:22px 20px 24px 0;border-bottom:1px solid var(--line);min-width:0}
+.why b{font-family:var(--f-display);font-weight:800;font-stretch:115%;font-size:clamp(1.35rem,2.6vw,1.9rem);line-height:1.05}
+.why span{color:var(--sarg-ink);font-family:var(--f-mono);font-size:.85rem;letter-spacing:.02em}
+@media (max-width:420px){.why b{font-size:1.2rem}.why li{padding-right:10px}}
 .by-profile{margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 @media (max-width:900px){.by-profile{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.by-profile{grid-template-columns:1fr}}
@@ -392,41 +391,16 @@ footer .wrap{display:grid;gap:28px}
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Por qué participar</p>
-      <h2>Un problema real, datos reales y gente que puede llevar tu idea más lejos.</h2>
-      <p class="lede">No es un ejercicio inventado: es el problema ambiental que llega a nuestras playas cada año. Esto es lo que te llevas.</p>
+      <h2>Lo que te llevas.</h2>
     </div>
-    <div class="why">
-      <article>
-        <span class="k">Impacto</span>
-        <h3>Trabaja en algo que importa</h3>
-        <p>Los retos vienen de quienes enfrentan el sargazo todos los días: hoteles, municipios, pescadores e investigadores. Tu prototipo responde a una necesidad concreta.</p>
-      </article>
-      <article>
-        <span class="k">Datos</span>
-        <h3>Construye con datos reales</h3>
-        <p>Acceso a la API de SargaDB, con monitoreo oficial, detección satelital y reportes ciudadanos. Nada de datasets de juguete.</p>
-      </article>
-      <article>
-        <span class="k">Aprendizaje</span>
-        <h3>Aprende antes de competir</h3>
-        <p>La Innovation Week te da talleres gratuitos de IA generativa, cloud, metodologías, pitch y la ciencia del sargazo, con especialistas.</p>
-      </article>
-      <article>
-        <span class="k">Portafolio</span>
-        <h3>Un proyecto que puedes mostrar</h3>
-        <p>En 12 horas sales con un prototipo funcional y un pitch presentado ante un jurado del sector público, privado y académico. El proyecto es de tu equipo.</p>
-      </article>
-      <article>
-        <span class="k">Conexiones</span>
-        <h3>Conoce a quien contrata y financia</h3>
-        <p>Mentores, empresas aliadas, universidades y gobierno en el mismo lugar, buscando talento y soluciones para la región.</p>
-      </article>
-      <article>
-        <span class="k">Continuidad</span>
-        <h3>Tu idea no termina ese día</h3>
-        <p>Los proyectos con potencial reciben seguimiento: mentoría, incubación o vinculación con aliados interesados en implementarlos. Además habrá premios.</p>
-      </article>
-    </div>
+    <ul class="why">
+      <li><b>Un problema real</b><span>No un caso inventado</span></li>
+      <li><b>Datos reales</b><span>API de SargaDB</span></li>
+      <li><b>Talleres gratis</b><span>Antes de competir</span></li>
+      <li><b>Un prototipo</b><span>Para tu portafolio, en 12 horas</span></li>
+      <li><b>Contactos</b><span>Con quien contrata y financia</span></li>
+      <li><b>Continuidad</b><span>Tu idea sigue después del evento</span></li>
+    </ul>
     <div class="by-profile" aria-label="Según tu perfil">
       <div><b>Si programas</b><span>Pon a prueba tu stack con IA, visión por computadora, APIs y dashboards sobre un problema que no tiene solución todavía.</span></div>
       <div><b>Si diseñas</b><span>Convierte datos complejos en herramientas que usen pescadores, hoteleros y autoridades.</span></div>
