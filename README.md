@@ -70,6 +70,7 @@ El resto del contenido está escrito directamente en `index.html`. Cada sección
 | El problema y cifras | `id="problema"` |
 | Formato (Innovation Week + hackatón) | `id="formato"` |
 | Los tres retos y SargaDB | `id="retos"` |
+| Por qué participar (beneficios y perfiles) | `id="por-que"` |
 | Perfiles de participantes | `id="perfiles"` |
 | Ruta de participación | `id="ruta"` |
 | Aliados y convocatoria de retos | `id="aliados"` · `id="propon-reto"` |
