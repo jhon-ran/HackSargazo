@@ -77,6 +77,7 @@ section{padding-block:clamp(64px,9vw,112px)}
 .hero h1{font-size:clamp(2.6rem,10cqi,8rem);font-weight:900;font-stretch:125%;max-width:100%;overflow-wrap:anywhere;letter-spacing:-.025em;line-height:.9}
 .hero h1 .s{color:var(--sarg);display:inline-block}
 .hero .tag{font-family:var(--f-display);font-weight:600;font-stretch:100%;font-size:clamp(1.3rem,2.6vw,1.9rem);max-width:28ch;line-height:1.2}
+.hero .kicker{font-family:var(--f-display);font-weight:700;font-stretch:110%;font-size:clamp(1.15rem,2.4vw,1.7rem);line-height:1.15;color:var(--sea);max-width:30ch;text-wrap:balance;margin-bottom:-10px}
 .meta{display:flex;flex-wrap:wrap;gap:10px}
 .chip{font-family:var(--f-mono);font-size:.82rem;padding:7px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
 .chip b{color:var(--sarg-ink);font-weight:600}
@@ -139,6 +140,22 @@ section{padding-block:clamp(64px,9vw,112px)}
 .data-note .tag-api{font:600 .74rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:6px;background:var(--sea);color:var(--bg);white-space:nowrap}
 .data-note p{max-width:70ch}
 @media (max-width:560px){.data-note{grid-template-columns:1fr;gap:10px}.data-note .tag-api{justify-self:start}}
+
+/* Por qué participar */
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+@media (max-width:900px){.why{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.why{grid-template-columns:1fr}}
+.why article{display:grid;gap:10px;align-content:start;padding:26px 24px 30px 0;border-bottom:1px solid var(--line);min-width:0}
+.why .k{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sarg-ink)}
+.why h3{font-size:1.3rem;font-stretch:110%}
+.why p{color:var(--muted)}
+.by-profile{margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.by-profile{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.by-profile{grid-template-columns:1fr}}
+.by-profile div{padding:18px 20px;border-radius:12px;background:var(--sea-soft);display:grid;gap:6px;align-content:start}
+.by-profile b{font-family:var(--f-display);font-stretch:110%;font-size:1.05rem}
+.by-profile span{font-size:.95rem;color:var(--muted)}
+.why-cta{margin-top:32px}
 
 /* Perfiles */
 .profiles{display:flex;flex-wrap:wrap;gap:10px}
@@ -310,7 +327,7 @@ footer .wrap{display:grid;gap:28px}
 <section class="hero" id="inicio" style="padding-bottom:0">
   <canvas id="drift" aria-hidden="true"></canvas>
   <div class="wrap">
-    <p class="eyebrow">Hackatón · Caribe mexicano</p>
+    <p class="kicker">El primer hackatón de sargazo en el Caribe mexicano</p>
     <h1>Hack<span class="s">Sargazo</span></h1>
     <p class="tag">Hackeando soluciones para el futuro del Caribe mexicano.</p>
     <div class="meta">
@@ -371,7 +388,56 @@ footer .wrap{display:grid;gap:28px}
   </div>
 </section>
 
-<section id="formato" class="alt">
+<section id="por-que" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Por qué participar</p>
+      <h2>Un problema real, datos reales y gente que puede llevar tu idea más lejos.</h2>
+      <p class="lede">No es un ejercicio inventado: es el problema ambiental que llega a nuestras playas cada año. Esto es lo que te llevas.</p>
+    </div>
+    <div class="why">
+      <article>
+        <span class="k">Impacto</span>
+        <h3>Trabaja en algo que importa</h3>
+        <p>Los retos vienen de quienes enfrentan el sargazo todos los días: hoteles, municipios, pescadores e investigadores. Tu prototipo responde a una necesidad concreta.</p>
+      </article>
+      <article>
+        <span class="k">Datos</span>
+        <h3>Construye con datos reales</h3>
+        <p>Acceso a la API de SargaDB, con monitoreo oficial, detección satelital y reportes ciudadanos. Nada de datasets de juguete.</p>
+      </article>
+      <article>
+        <span class="k">Aprendizaje</span>
+        <h3>Aprende antes de competir</h3>
+        <p>La Innovation Week te da talleres gratuitos de IA generativa, cloud, metodologías, pitch y la ciencia del sargazo, con especialistas.</p>
+      </article>
+      <article>
+        <span class="k">Portafolio</span>
+        <h3>Un proyecto que puedes mostrar</h3>
+        <p>En 12 horas sales con un prototipo funcional y un pitch presentado ante un jurado del sector público, privado y académico. El proyecto es de tu equipo.</p>
+      </article>
+      <article>
+        <span class="k">Conexiones</span>
+        <h3>Conoce a quien contrata y financia</h3>
+        <p>Mentores, empresas aliadas, universidades y gobierno en el mismo lugar, buscando talento y soluciones para la región.</p>
+      </article>
+      <article>
+        <span class="k">Continuidad</span>
+        <h3>Tu idea no termina ese día</h3>
+        <p>Los proyectos con potencial reciben seguimiento: mentoría, incubación o vinculación con aliados interesados en implementarlos. Además habrá premios.</p>
+      </article>
+    </div>
+    <div class="by-profile" aria-label="Según tu perfil">
+      <div><b>Si programas</b><span>Pon a prueba tu stack con IA, visión por computadora, APIs y dashboards sobre un problema que no tiene solución todavía.</span></div>
+      <div><b>Si diseñas</b><span>Convierte datos complejos en herramientas que usen pescadores, hoteleros y autoridades.</span></div>
+      <div><b>Si investigas</b><span>Lleva tu conocimiento del mar a prototipos que salen del laboratorio.</span></div>
+      <div><b>Si emprendes o haces hardware</b><span>Valida un modelo de negocio o un dispositivo con aliados que pueden adoptarlo.</span></div>
+    </div>
+    <div class="why-cta"><a class="btn btn-primary" href="#participar" data-tab="participar">Quiero participar</a></div>
+  </div>
+</section>
+
+<section id="formato">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Cómo funciona</p>
@@ -416,7 +482,7 @@ footer .wrap{display:grid;gap:28px}
   </div>
 </section>
 
-<section id="retos">
+<section id="retos" class="alt">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Los tres retos</p>
@@ -449,7 +515,7 @@ footer .wrap{display:grid;gap:28px}
   </div>
 </section>
 
-<section id="perfiles" class="alt">
+<section id="perfiles">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">¿Quién puede participar?</p>
@@ -470,7 +536,7 @@ footer .wrap{display:grid;gap:28px}
   </div>
 </section>
 
-<section id="ruta">
+<section id="ruta" class="alt">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Cómo participar</p>
