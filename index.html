@@ -91,6 +91,7 @@ section{padding-block:clamp(64px,9vw,112px)}
 .readings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));border-top:2px solid var(--ink)}
 .reading{padding:22px 20px 24px 0;border-bottom:1px solid var(--line);display:grid;gap:8px;align-content:start;min-width:0}
 .reading .n{font-family:var(--f-mono);font-weight:600;font-size:clamp(1.9rem,3.4vw,2.5rem);font-variant-numeric:tabular-nums;color:var(--ink);line-height:1}
+.reading .unit{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sarg-ink);margin-top:-4px}
 .reading .n small{font-size:.5em;color:var(--sarg-ink);margin-left:4px}
 .reading p{font-size:.95rem;color:var(--muted)}
 .reading a.src{text-decoration:none}
@@ -278,6 +279,7 @@ a.on-dark{color:var(--sarg)}
 .socials{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:6px}
 .org .ig{font-weight:600;text-decoration:none}
 .org .ig:hover{text-decoration:underline}
+.built{margin:0;font-family:var(--f-display);font-weight:700;font-stretch:115%;font-size:.95rem;letter-spacing:.02em;color:var(--sarg-ink)}
 .foot-links{display:flex;flex-wrap:wrap;gap:6px 18px}
 
 /* Footer */
@@ -368,10 +370,10 @@ footer .wrap{display:grid;gap:28px}
       <p class="lede">Las arribazones de <i>Sargassum natans</i> y <i>S. fluitans</i> pasaron de ser un fenómeno estacional menor a una crisis permanente para playas, ecosistemas, turismo y comunidades costeras. Las soluciones tecnológicas aplicadas todavía son pocas.</p>
     </div>
     <div class="readings">
-      <div class="reading"><span class="n">76,000<small>t</small></span><p>recolectadas por la SEMAR en los primeros meses de 2025.</p><a class="src" href="#referencias">[3] Riviera Maya News, sep 2025</a></div>
-      <div class="reading"><span class="n">52,000<small>t</small></span><p>retiradas solo en Tulum durante el primer semestre de 2025.</p><a class="src" href="#referencias">[4] Tulum Times, jul 2025</a></div>
-      <div class="reading"><span class="n">16,797<small>t</small></span><p>recolectadas en Semana Santa 2026, en unas pocas semanas.</p><a class="src" href="#referencias">[5] Tulum Times, jul 2026</a></div>
-      <div class="reading"><span class="n">140<small>t</small></span><p>en Isla Mujeres en una sola noche, julio de 2025.</p><a class="src" href="#referencias">[6] Mexico News Daily, jul 2025</a></div>
+      <div class="reading"><span class="n">76,000</span><span class="unit">toneladas</span><p>recolectadas por la SEMAR en los primeros meses de 2025.</p><a class="src" href="#referencias">[3] Riviera Maya News, sep 2025</a></div>
+      <div class="reading"><span class="n">52,000</span><span class="unit">toneladas</span><p>retiradas solo en Tulum durante el primer semestre de 2025.</p><a class="src" href="#referencias">[4] Tulum Times, jul 2025</a></div>
+      <div class="reading"><span class="n">16,797</span><span class="unit">toneladas</span><p>recolectadas en Semana Santa 2026, en unas pocas semanas.</p><a class="src" href="#referencias">[5] Tulum Times, jul 2026</a></div>
+      <div class="reading"><span class="n">140</span><span class="unit">toneladas</span><p>en Isla Mujeres en una sola noche, julio de 2025.</p><a class="src" href="#referencias">[6] Mexico News Daily, jul 2025</a></div>
     </div>
     <div class="problem-text">
       <div>
@@ -826,6 +828,7 @@ footer .wrap{display:grid;gap:28px}
       <span class="foot-links"><a data-cfg-href="email" href="mailto:hola@rivieramaya.tech"><span data-cfg="email">hola@rivieramaya.tech</span></a><a href="https://www.instagram.com/wtm.qroo/" target="_blank" rel="noopener">@wtm.qroo</a><a href="https://www.instagram.com/rivieramayatech" target="_blank" rel="noopener">@rivieramayatech</a><a href="codigo-de-conducta.html">Código de conducta</a></span>
       <span data-cfg="dateText">Febrero 2027 · por confirmar</span>
     </div>
+    <p class="built">Built in Paradise</p>
   </div>
 </footer>
 
