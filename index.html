@@ -144,12 +144,15 @@ section{padding-block:clamp(64px,9vw,112px)}
 @media (max-width:560px){.data-note{grid-template-columns:1fr;gap:10px}.data-note .tag-api{justify-self:start}}
 
 /* Por qué participar */
-.why{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
-@media (max-width:900px){.why{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.why li{display:grid;gap:4px;align-content:start;padding:22px 20px 24px 0;border-bottom:1px solid var(--line);min-width:0}
-.why b{font-family:var(--f-display);font-weight:800;font-stretch:115%;font-size:clamp(1.35rem,2.6vw,1.9rem);line-height:1.05}
-.why span{color:var(--sarg-ink);font-family:var(--f-mono);font-size:.85rem;letter-spacing:.02em}
-@media (max-width:420px){.why b{font-size:1.2rem}.why li{padding-right:10px}}
+.manifesto{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:clamp(10px,1.6vw,18px)}
+.manifesto li{font-family:var(--f-display);font-weight:700;font-stretch:108%;font-size:clamp(1.45rem,3.3vw,2.5rem);line-height:1.12;text-wrap:balance;color:var(--ink);max-width:26ch}
+.manifesto em{font-style:normal;color:var(--sarg)}
+.why-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:center;margin-top:16px}
+@media (max-width:980px){.why-layout{grid-template-columns:1fr}}
+.why-layout .manifesto{margin-top:0}
+.why-layout .manifesto li{font-size:clamp(1.45rem,2.6vw,2.1rem)}
+.why-layout .by-profile{margin-top:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:560px){.why-layout .by-profile{grid-template-columns:1fr}}
 .by-profile{margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 @media (max-width:900px){.by-profile{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.by-profile{grid-template-columns:1fr}}
@@ -397,23 +400,21 @@ footer .wrap{display:grid;gap:28px}
 
 <section id="por-que" class="alt">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Por qué participar</p>
-      <h2>Lo que te llevas.</h2>
-    </div>
-    <ul class="why">
-      <li><b>Un problema real</b><span>No un caso inventado</span></li>
-      <li><b>Datos reales</b><span>API de SargaDB</span></li>
-      <li><b>Talleres gratis</b><span>Antes de competir</span></li>
-      <li><b>Un prototipo</b><span>Para tu portafolio, en 12 horas</span></li>
-      <li><b>Contactos</b><span>Con quien contrata y financia</span></li>
-      <li><b>Continuidad</b><span>Tu idea sigue después del evento</span></li>
+    <p class="eyebrow">Por qué participar</p>
+    <div class="why-layout">
+    <ul class="manifesto">
+      <li>Contribuye a resolver <em>un problema real</em> que afecta a muchas personas y al medio ambiente.</li>
+      <li>Trabaja con <em>datos reales</em>.</li>
+      <li>Diseña <em>un prototipo</em> que puede cambiar muchas vidas.</li>
+      <li>Conoce a <em>personas con una misión</em> como la tuya.</li>
+      <li>Capacítate en <em>talleres gratis</em> y lleva tu idea al siguiente nivel.</li>
     </ul>
     <div class="by-profile" aria-label="Según tu perfil">
       <div><b>Si programas</b><span>Pon a prueba tu stack con IA, visión por computadora, APIs y dashboards sobre un problema que no tiene solución todavía.</span></div>
       <div><b>Si diseñas</b><span>Convierte datos complejos en herramientas que usen pescadores, hoteleros y autoridades.</span></div>
       <div><b>Si investigas</b><span>Lleva tu conocimiento del mar a prototipos que salen del laboratorio.</span></div>
       <div><b>Si emprendes o haces hardware</b><span>Valida un modelo de negocio o un dispositivo con aliados que pueden adoptarlo.</span></div>
+    </div>
     </div>
     <div class="why-cta"><a class="btn btn-primary" href="#participar" data-tab="participar">Quiero participar</a></div>
   </div>
