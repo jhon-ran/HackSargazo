@@ -93,6 +93,8 @@ section{padding-block:clamp(64px,9vw,112px)}
 .reading .n{font-family:var(--f-mono);font-weight:600;font-size:clamp(1.9rem,3.4vw,2.5rem);font-variant-numeric:tabular-nums;color:var(--ink);line-height:1}
 .reading .n small{font-size:.5em;color:var(--sarg-ink);margin-left:4px}
 .reading p{font-size:.95rem;color:var(--muted)}
+.reading a.src{text-decoration:none}
+.reading a.src:hover{text-decoration:underline}
 .reading .src{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);opacity:.85}
 .problem-text{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px;margin-top:48px}
 .problem-text h3{margin-bottom:10px}
@@ -278,6 +280,12 @@ a.on-dark{color:var(--sarg)}
 /* Footer */
 footer{padding-block:48px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
 footer .wrap{display:grid;gap:28px}
+.refs-toggle summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sarg-ink)}
+.refs-toggle summary::-webkit-details-marker{display:none}
+.refs-toggle summary::after{content:"+";font-size:1rem;color:var(--sea);transition:transform .2s ease}
+.refs-toggle[open] summary::after{transform:rotate(45deg)}
+@media (prefers-reduced-motion: reduce){.refs-toggle summary::after{transition:none}}
+.refs-toggle[open] .refs{margin-top:12px}
 .refs{margin:0;padding-left:1.4em;display:grid;gap:6px;font-size:.82rem}
 .refs li{overflow-wrap:anywhere}
 .foot-line{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
@@ -358,10 +366,10 @@ footer .wrap{display:grid;gap:28px}
       <p class="lede">Las arribazones de <i>Sargassum natans</i> y <i>S. fluitans</i> pasaron de ser un fenómeno estacional menor a una crisis permanente para playas, ecosistemas, turismo y comunidades costeras. Las soluciones tecnológicas aplicadas todavía son pocas.</p>
     </div>
     <div class="readings">
-      <div class="reading"><span class="n">76,000<small>t</small></span><p>recolectadas por la SEMAR en los primeros meses de 2025.</p><span class="src">[3] Riviera Maya News, sep 2025</span></div>
-      <div class="reading"><span class="n">52,000<small>t</small></span><p>retiradas solo en Tulum durante el primer semestre de 2025.</p><span class="src">[4] Tulum Times, jul 2025</span></div>
-      <div class="reading"><span class="n">16,797<small>t</small></span><p>recolectadas en Semana Santa 2026, en unas pocas semanas.</p><span class="src">[5] Tulum Times, jul 2026</span></div>
-      <div class="reading"><span class="n">140<small>t</small></span><p>en Isla Mujeres en una sola noche, julio de 2025.</p><span class="src">[6] Mexico News Daily, jul 2025</span></div>
+      <div class="reading"><span class="n">76,000<small>t</small></span><p>recolectadas por la SEMAR en los primeros meses de 2025.</p><a class="src" href="#referencias">[3] Riviera Maya News, sep 2025</a></div>
+      <div class="reading"><span class="n">52,000<small>t</small></span><p>retiradas solo en Tulum durante el primer semestre de 2025.</p><a class="src" href="#referencias">[4] Tulum Times, jul 2025</a></div>
+      <div class="reading"><span class="n">16,797<small>t</small></span><p>recolectadas en Semana Santa 2026, en unas pocas semanas.</p><a class="src" href="#referencias">[5] Tulum Times, jul 2026</a></div>
+      <div class="reading"><span class="n">140<small>t</small></span><p>en Isla Mujeres en una sola noche, julio de 2025.</p><a class="src" href="#referencias">[6] Mexico News Daily, jul 2025</a></div>
     </div>
     <div class="problem-text">
       <div>
@@ -800,8 +808,8 @@ footer .wrap{display:grid;gap:28px}
 
 <footer>
   <div class="wrap">
-    <div>
-      <p class="eyebrow" style="margin-bottom:10px">Referencias</p>
+    <details class="refs-toggle" id="referencias">
+      <summary>Referencias de las cifras</summary>
       <ol class="refs">
         <li>UNAM, Grupo Interdisciplinario de Estudios del Sargazo (GIES). sargazo.unam.mx</li>
         <li>Sargassum Information Hub (2024). "Mexico – Sargassum impacts and response." sargassumhub.org</li>
@@ -811,7 +819,7 @@ footer .wrap{display:grid;gap:28px}
         <li>Mexico News Daily (jul 2025). "The sargassum just keeps coming to the Quintana Roo coast."</li>
         <li>Tulum Times (may 2025). "How Riviera Maya is battling 2025's worst sargassum wave."</li>
       </ol>
-    </div>
+    </details>
     <p class="credits">Fotos en <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>: <a href="https://unsplash.com/photos/Y3eMgde6EI4" target="_blank" rel="noopener">Karl Callwood</a>, <a href="https://unsplash.com/photos/z56kWLr9cMU" target="_blank" rel="noopener">Naja Bertolt Jensen</a>, <a href="https://unsplash.com/photos/CLiPoZ-rYkw" target="_blank" rel="noopener">Margo Evardson</a> y <a href="https://unsplash.com/photos/eJySgLy2xTI" target="_blank" rel="noopener">Thor Tryggvason</a>.</p>
     <div class="foot-line">
       <span>HackSargazo · Women Techmakers Quintana Roo × Riviera Maya Tech Builders</span>
@@ -843,6 +851,8 @@ const CONFIG = {
 };
 /* ====================================== */
 
+// Abrir referencias al llegar por #referencias
+document.querySelectorAll('a[href="#referencias"]').forEach(a => a.addEventListener("click", () => { document.getElementById("referencias").open = true; }));
 document.querySelectorAll("[data-cfg]").forEach(el => {
   const v = CONFIG[el.dataset.cfg];
   if (v) el.textContent = v;
