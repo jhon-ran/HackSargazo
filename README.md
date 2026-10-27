@@ -2,7 +2,7 @@
 
 Landing page de **HackSargazo**, el hackatón sobre el sargazo en la Riviera Maya, organizado por **Women Techmakers Quintana Roo** y **Riviera Maya Tech Builders**.
 
-- **Sitio:** https://jhon-ran.github.io/HackSargazo/
+- **Sitio:** https://hacksargazo.com/
 - **Fecha:** febrero de 2027 (por confirmar)
 - **Sede:** Cancún y/o Playa del Carmen (por confirmar)
 - **Contacto:** hola@rivieramaya.tech · Instagram [@wtm.qroo](https://www.instagram.com/wtm.qroo/) y [@rivieramayatech](https://www.instagram.com/rivieramayatech)
@@ -18,6 +18,9 @@ La página sirve para medir el interés de participantes, captar aliados y patro
 ├── codigo-de-conducta.html    Código de conducta del evento
 ├── apps-script/Code.gs        Script que guarda los registros en una hoja de Google
 ├── img/                       Fotos optimizadas (.webp) y originales de Unsplash (.jpg)
+├── CNAME                      Dominio propio para GitHub Pages (hacksargazo.com)
+├── robots.txt                 Indicaciones para buscadores
+├── sitemap.xml                Lista de páginas para Google y Bing
 ├── icons/                     Favicon e íconos para pestañas, iOS y Android (fuente: favicon.svg)
 └── README.md
 ```
@@ -32,7 +35,7 @@ No hace falta instalar nada. Cualquiera de estas opciones funciona:
 
 ## Publicación
 
-El sitio se publica con **GitHub Pages** desde la rama `main`, carpeta raíz. Cada cambio que llega a `main` aparece en el sitio en uno o dos minutos. Puedes revisar el estado en la pestaña **Actions** del repositorio.
+El sitio se publica con **GitHub Pages** desde la rama `main`, carpeta raíz, en el dominio **hacksargazo.com** (archivo `CNAME`). Cada cambio que llega a `main` aparece en el sitio en uno o dos minutos. Puedes revisar el estado en la pestaña **Actions** del repositorio.
 
 ---
 
@@ -91,6 +94,37 @@ Para agregar una pregunta frecuente, copia un bloque `<details>…</details>` de
 ### Colores y tipografía
 
 Los colores están definidos como variables al inicio del `<style>` (`--sea`, `--sarg`, `--ink`…), con versiones para modo claro y oscuro. Cambia los valores ahí y se actualizan en toda la página. Las fuentes son Anybody, Instrument Sans y JetBrains Mono, desde Google Fonts.
+
+### SEO y vista previa al compartir
+
+`index.html` incluye en el `<head>`:
+
+- **`<title>` y `description`:** lo que aparece en Google.
+- **Open Graph y Twitter:** la tarjeta que se ve al compartir el enlace en WhatsApp, Facebook, LinkedIn o X. Usa `img/og-hacksargazo.jpg` (1200×630).
+- **Datos estructurados (`application/ld+json`):** describen el evento a Google (tipo `Event`).
+
+**Cuando se confirmen fecha y sede**, además de `CONFIG`, actualiza el bloque `application/ld+json`:
+
+```json
+"startDate": "2027-02-20T09:00:00-05:00",
+"endDate": "2027-02-20T21:00:00-05:00",
+"location": {
+  "@type": "Place",
+  "name": "Nombre de la sede",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle y número",
+    "addressLocality": "Playa del Carmen",
+    "addressRegion": "Quintana Roo",
+    "postalCode": "77710",
+    "addressCountry": "MX"
+  }
+}
+```
+
+Con fecha y dirección completas, Google puede mostrar el evento con fecha y lugar en los resultados. Valídalo en la [prueba de resultados enriquecidos](https://search.google.com/test/rich-results). Actualiza también `<lastmod>` en `sitemap.xml` cuando haya cambios importantes y, si cambia la fecha o el texto, la imagen `og-hacksargazo.jpg`.
+
+**Si cambia el dominio** (hoy `https://hacksargazo.com/`, configurado en el archivo `CNAME`), reemplázalo en: `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `codigo-de-conducta.html`, `sitemap.xml` y `robots.txt`.
 
 ---
 
